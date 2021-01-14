@@ -17,4 +17,4 @@ def load_data():
     historical_data = json.loads(data.contents[0])
     quotes = historical_data['props']['initialState']['cryptocurrency']['ohlcvHistorical']['quotes']
 
-    st.write(quotes)
+    st.write(historical_data)
