@@ -1,4 +1,5 @@
 import requests
+import lxml.html
 import pandas as pd
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
