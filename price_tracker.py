@@ -1,21 +1,16 @@
-import pandas
 import requests
-from bs4 import BeautifulSoup
+import pandas as pd
+from datetime import datetime
+from dateutil.relativedelta import relativedelta
 
-link = 'https://coinmarketcap.com/currencies/bitcoin/historical-data/?start={}&end={}'
+def get_date_range(number_of_months:int):
+    now = datetime.now()
+    dt_end = now.strftime("%Y%m%d")
+    dt_start = (now - relativedelta(months=number_of_months)).strftime("%Y%m%d")
+    return f'start={dt_start}&end={dt_end}'
 
-def get_coinmarketcap_info(url,s_date,e_date):
-    response = requests.get(url.format(s_date,e_date))
-    soup = BeautifulSoup(response.text,"lxml")
+number_of_months = 3
 
-    for items in soup.select("table.table tr.text-right"):
-        date = items.select_one("td.text-left").get_text(strip=True)
-        close = items.select_one("td[data-format-market-cap]").find_previous_sibling().get_text(strip=True)
-        volume = items.select_one("td[data-format-market-cap]").get_text(strip=True)
-        marketcap = items.select_one("td[data-format-market-cap]").find_next_sibling().get_text(strip=True)
-        yield date,close,volume,marketcap
-
-if __name__ == '__main__':
-    dataframe = (elem for elem in get_coinmarketcap_info(link,s_date='20210101',e_date='20210113'))
-    df = pandas.DataFrame(dataframe)
-    print(df)
+table = pd.read_html(f'https://coinmarketcap.com/currencies/bitcoin/historical-data/?{get_date_range(number_of_months)}')[0]
+table = table[['Date', 'Close**', 'Volume','Market Cap']]
+print(table)
