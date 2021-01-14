@@ -6,6 +6,7 @@ import requests
 import json
 import time
 
+currency_price_unit = st.sidebar.selectbox('Select currency for price', ('USD', 'BTC', 'ETH'))
 
 @st.cache
 def load_data():
