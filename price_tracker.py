@@ -15,8 +15,7 @@ def load_data():
     soup = BeautifulSoup(cmc.content, 'html.parser')
     data = soup.find('script', id='__NEXT_DATA__', type='application/json')
     historical_data = json.loads(data.contents[0])
-    quotes = historical_data['props']['initialState']['cryptocurrency']['ohlcvHistorical'][i]['quotes']
-    
+    quotes = historical_data['props']['initialState']['cryptocurrency']['ohlcvHistorical']['quotes']
 #    listings = coin_data['props']['initialState']['cryptocurrency']['listingLatest']['data']
 
 
