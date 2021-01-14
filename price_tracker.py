@@ -6,48 +6,43 @@ import requests
 import json
 import time
 
-currency_price_unit = st.sidebar.selectbox('Select currency for price', ('USD', 'BTC', 'ETH'))
-
 @st.cache
 def load_data():
-    cmc = requests.get('https://coinmarketcap.com')
+    url = "https://coinmarketcap.com/currencies/bitcoin/historical-data/?start="
+    start_date = "20210101&end="
+    end_date = "20210113"
+    cmc = requests.get(url + start_date + end_date)
     soup = BeautifulSoup(cmc.content, 'html.parser')
-
     data = soup.find('script', id='__NEXT_DATA__', type='application/json')
-    coins = {}
-    coin_data = json.loads(data.contents[0])
-    listings = coin_data['props']['initialState']['cryptocurrency']['listingLatest']['data']
-    for i in listings:
-      coins[str(i['id'])] = i['slug']
+    historical_data = json.loads(data.contents[0])
+    quotes = historical_data['props']['initialState']['cryptocurrency']['ohlcvHistorical'][i]['quotes']
+    
+#    listings = coin_data['props']['initialState']['cryptocurrency']['listingLatest']['data']
 
+
+    market_cap = []
+    volume = []
+    timestamp = []
     coin_name = []
     coin_symbol = []
-    market_cap = []
-    percent_change_1h = []
-    percent_change_24h = []
-    percent_change_7d = []
     price = []
-    volume_24h = []
 
-    for i in listings:
-      coin_name.append(i['slug'])
-      coin_symbol.append(i['symbol'])
-      price.append(i['quote'][currency_price_unit]['price'])
-      percent_change_1h.append(i['quote'][currency_price_unit]['percent_change_1h'])
-      percent_change_24h.append(i['quote'][currency_price_unit]['percent_change_24h'])
-      percent_change_7d.append(i['quote'][currency_price_unit]['percent_change_7d'])
-      market_cap.append(i['quote'][currency_price_unit]['market_cap'])
-      volume_24h.append(i['quote'][currency_price_unit]['volume_24h'])
+    for i in quotes:
+      coin_name.append(info['name'])
+      coin_symbol.append(info['symbol'])
+      market_cap.append(i['quote'][GBP]['market_cap'])
+      volume.append(i['quote'][GBP]['volume_24h'])
+      price.append(i['quote']['GBP']['price'])
+      timestamp.append(i['quote'][GBP]['timestamp'])
+    
 
-    df = pd.DataFrame(columns=['coin_name', 'coin_symbol', 'market_cap', 'percent_change_1h', 'percent_change_24h', 'percent_change_7d', 'price', 'volume_24h'])
+    df = pd.DataFrame(columns=['coin_name', 'coin_symbol', 'market_cap', 'volume', 'price', 'timestamp'])
     df['coin_name'] = coin_name
     df['coin_symbol'] = coin_symbol
     df['price'] = price
-    df['percent_change_1h'] = percent_change_1h
-    df['percent_change_24h'] = percent_change_24h
-    df['percent_change_7d'] = percent_change_7d
     df['market_cap'] = market_cap
-    df['volume_24h'] = volume_24h
+    df['volume'] = volume
+    df['timestamp'] = timestamp
     return df
 
 df = load_data()
