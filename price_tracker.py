@@ -16,6 +16,6 @@ def get_coinmarketcap_info(url,s_date,e_date):
         yield date,close,volume,marketcap
 
 if __name__ == '__main__':
-    dataframe = (elem for elem in get_coinmarketcap_info(link,s_date='20130428',e_date='20191020'))
+    dataframe = (elem for elem in get_coinmarketcap_info(link,s_date='20210101',e_date='20210113'))
     df = pandas.DataFrame(dataframe)
     print(df)
