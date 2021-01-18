@@ -7,7 +7,7 @@ import plotly.graph_objects as go
 import plotly.express as px
 import warnings
 import requests
-import html5lib
+#import html5lib
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
 import lxml.html
