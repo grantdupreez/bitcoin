@@ -3,7 +3,8 @@ import pandas as pd
 import streamlit as st
 import numpy as np
 from pathlib import Path
-import matplotlib.pyplot as plt
+import plotly.express as px
+#import matplotlib.pyplot as plt
 #%matplotlib inline
 import warnings
 warnings.filterwarnings('ignore')
@@ -53,6 +54,10 @@ btc_df
 
 # Plot the Bollinger Bands for BTC/USD closing prices
 
+fig = px.line(btc_df[['Close','bollinger_mid_band','bollinger_upper_band','bollinger_lower_band']])
+fig.show()
+
+
 #fig, ax = plt.subplots()
 
 #fig = plt.figure(figsize=(20,10))
@@ -60,4 +65,4 @@ btc_df
 #ax.plot(btc_df[['Close','bollinger_mid_band','bollinger_upper_band','bollinger_lower_band']])
 
 #st.pyplot(fig)
-st.line_chart(btc_df)
+#st.line_chart(btc_df)
