@@ -34,7 +34,7 @@ dt_start = (now - relativedelta(months=number_of_months)).strftime("%Y%m%d")
 link = 'https://coinmarketcap.com/currencies/bitcoin/historical-data/?start={}&end={}'
 
 dataframe = (elem for elem in get_coinmarketcap_info(link,dt_start,dt_end))
-df = pandas.DataFrame(dataframe)
+df = pd.DataFrame(dataframe)
 print(df)
     
     
