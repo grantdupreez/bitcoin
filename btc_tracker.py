@@ -54,6 +54,6 @@ btc_df
 # Plot the Bollinger Bands for BTC/USD closing prices
 #fig = go.Figure([go.Scatter(x=btc_df['Timestamp'], y=btc_df[['Close','bollinger_mid_band','bollinger_upper_band','bollinger_lower_band']])])
 
-fig = go.Figure(btc_df)
+fig = go.line(btc_df, x="Timestamp", y=btc_df.columns)
 
 fig
