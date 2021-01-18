@@ -7,19 +7,12 @@ import plotly.graph_objects as go
 import plotly.express as px
 import warnings
 import requests
-#import html5lib
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
 import lxml.html
 from typing import Dict, List
 
 #collect data
-
-def get_start_date(number_of_months:int):
-    now = datetime.now()
-    dt_end = now.strftime("%Y%m%d")
-    dt_start = (now - relativedelta(months=number_of_months)).strftime("%Y%m%d")
-    return dt_start
 
 def coinmarketcap_get_btc(start_date: str, end_date: str) -> List[Dict]:
     # Build the url
@@ -39,9 +32,10 @@ def coinmarketcap_get_btc(start_date: str, end_date: str) -> List[Dict]:
 ############
 number_of_months = 3
 now = datetime.now()
-end_date = now.strftime("%Y%m%d")
-
-st.write(coinmarketcap_get_btc(get_start_date(number_of_months), end_date))
+dt_end = now.strftime("%Y%m%d")
+dt_start = (now - relativedelta(months=number_of_months)).strftime("%Y%m%d")
+    
+st.write(coinmarketcap_get_btc(dt_start, dt_end)
 
 warnings.filterwarnings('ignore')
 # Set path to CSV and read in CSV
