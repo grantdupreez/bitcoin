@@ -38,8 +38,10 @@ def coinmarketcap_get_btc(start_date: str, end_date: str) -> List[Dict]:
 
 ############
 number_of_months = 3
+now = datetime.now()
+end_date = now.strftime("%Y%m%d")
 
-coinmarketcap_get_btc(get_start_date(3), now.strftime("%Y%m%d"))
+coinmarketcap_get_btc(get_start_date(3), end_date)
 
 warnings.filterwarnings('ignore')
 # Set path to CSV and read in CSV
