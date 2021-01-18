@@ -7,3 +7,4 @@ beautifulsoup4==4.9.1
 requests==2.22.0
 json5==0.9.4
 Pillow==7.0.0
+matplotlib=3.3.3
