@@ -19,7 +19,8 @@ number_of_months = 3
 now = datetime.now()
 dt_end = now.strftime("%Y%m%d")
 dt_start = (now - relativedelta(months=number_of_months)).strftime("%Y%m%d")
-url = f'https://coinmarketcap.com/currencies/bitcoin/historical-data/?start={start_date}&end={end_date}'
+
+url = f'https://coinmarketcap.com/currencies/bitcoin/historical-data/?start={dt_start}&end={dt_end}'
 # Make the request and parse the tree
 response = requests.get(url, timeout=5)
 tree = lxml.html.fromstring(response.text)
