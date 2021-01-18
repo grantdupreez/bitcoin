@@ -15,29 +15,27 @@ from bs4 import BeautifulSoup
 
 #collect data
 
-def get_coinmarketcap_info(url,s_date,e_date):
-    response = requests.get(url.format(s_date,e_date))
-    soup = BeautifulSoup(response.text,"lxml")
-
-    for items in soup.select("table.table tr.text-right"):
-        date = items.select_one("td.text-left").get_text(strip=True)
-        close = items.select_one("td[data-format-market-cap]").find_previous_sibling().get_text(strip=True)
-        volume = items.select_one("td[data-format-market-cap]").get_text(strip=True)
-        marketcap = items.select_one("td[data-format-market-cap]").find_next_sibling().get_text(strip=True)
-        yield date,close,volume,marketcap
-
-############
 number_of_months = 3
 now = datetime.now()
 dt_end = now.strftime("%Y%m%d")
 dt_start = (now - relativedelta(months=number_of_months)).strftime("%Y%m%d")
-link = 'https://coinmarketcap.com/currencies/bitcoin/historical-data/?start={}&end={}'
+url = f'https://coinmarketcap.com/currencies/bitcoin/historical-data/?start={start_date}&end={end_date}'
+# Make the request and parse the tree
+response = requests.get(url, timeout=5)
+tree = lxml.html.fromstring(response.text)
+# Extract table and raw data
+table = tree.find_class('table-responsive')[0]
+raw_data = [_.text_content() for _ in table.find_class('text-right')]
+# Process the data
+col_names = ['Date'] + raw_data[:6]
+row_list = []
+for x in raw_data[6:]:
+    _, date, _open, _high, _low, _close, _vol, _m_cap, _ = x.replace(',', '').split('\n')
+    row_list.append([date, float_helper(_open), float_helper(_high), float_helper(_low),
+    float_helper(_close), float_helper(_vol), float_helper(_m_cap)])
+raw_data = pd.DataFrame(data=row_list, columns=col_names)
+st.write(raw_data)
 
-st.write(link, "20201001", dt_end)
-dataframe = (elem for elem in get_coinmarketcap_info(link,"20201001",dt_end))
-df = pd.DataFrame(dataframe)
-st.write("data collected")
-st.write(df)
 
 warnings.filterwarnings('ignore')
 # Set path to CSV and read in CSV
