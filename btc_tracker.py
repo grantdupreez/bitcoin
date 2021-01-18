@@ -35,9 +35,9 @@ link = 'https://coinmarketcap.com/currencies/bitcoin/historical-data/?start={}&e
 
 dataframe = (elem for elem in get_coinmarketcap_info(link,dt_start,dt_end))
 df = pd.DataFrame(dataframe)
-print(df)
-    
-    
+st.write("data collected")
+st.write(df)
+
 warnings.filterwarnings('ignore')
 # Set path to CSV and read in CSV
 csv_path = Path('sample_data.csv')
