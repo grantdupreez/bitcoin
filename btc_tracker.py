@@ -34,7 +34,7 @@ dt_start = (now - relativedelta(months=number_of_months)).strftime("%Y%m%d")
 link = 'https://coinmarketcap.com/currencies/bitcoin/historical-data/?start={}&end={}'
 
 st.write(link, dt_start, dt_end)
-dataframe = (elem for elem in get_coinmarketcap_info(link,dt_start,dt_end))
+dataframe = (elem for elem in get_coinmarketcap_info(link,"20201001",dt_end))
 df = pd.DataFrame(dataframe)
 st.write("data collected")
 st.write(df)
