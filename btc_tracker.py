@@ -31,6 +31,9 @@ btc_df['crossover_long'] = np.where(btc_df['fast_close'] > btc_df['slow_close'],
 btc_df['crossover_short'] = np.where(btc_df['fast_close'] < btc_df['slow_close'], -1.0, 0.0)
 btc_df['crossover_signal'] = btc_df['crossover_long'] + btc_df['crossover_short']
 btc_df.head()
+st.write("Set short and long windows")
+btc_df
+
 
 # Set bollinger band window
 bollinger_window = 20
@@ -44,16 +47,18 @@ btc_df['bollinger_lower_band']  = btc_df['bollinger_mid_band'] - (btc_df['bollin
 btc_df['bollinger_long'] = np.where(btc_df['Close'] < btc_df['bollinger_lower_band'], 1.0, 0.0)
 btc_df['bollinger_short'] = np.where(btc_df['Close'] > btc_df['bollinger_upper_band'], -1.0, 0.0)
 btc_df['bollinger_signal'] = btc_df['bollinger_long'] + btc_df['bollinger_short']
+st.write("Set bollinger band window")
+btc_df
 
 # Plot the Bollinger Bands for BTC/USD closing prices
 
-plt.figure(figsize=(20,10))
+fig = plt.figure(figsize=(20,10))
 plt.plot(btc_df[['Close','bollinger_mid_band','bollinger_upper_band','bollinger_lower_band']])
 #plt.plot(df.index, signal, label='Signal Line', color='red')
 #plt.xticks(rotation=45)
 #plt.legend(loc='upper left')
-plt.show()
-
+fig = plt.show()
+fig
 
 #fig = plt.subplots()
 #fig = btc_df[['Close','bollinger_mid_band','bollinger_upper_band','bollinger_lower_band']].plot(figsize=(20,10))
