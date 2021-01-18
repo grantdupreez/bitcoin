@@ -41,7 +41,7 @@ number_of_months = 3
 now = datetime.now()
 end_date = now.strftime("%Y%m%d")
 
-coinmarketcap_get_btc(get_start_date(3), end_date)
+st.write(coinmarketcap_get_btc(get_start_date(number_of_months), end_date))
 
 warnings.filterwarnings('ignore')
 # Set path to CSV and read in CSV
