@@ -2,7 +2,7 @@
 import pandas as pd
 import numpy as np
 from pathlib import Path
-%matplotlib inline
+# %matplotlib inline
 import warnings
 warnings.filterwarnings('ignore')
 # Set path to CSV and read in CSV
