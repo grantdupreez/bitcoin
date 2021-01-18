@@ -50,8 +50,8 @@ btc_df.set_index(pd.to_datetime(btc_df['Timestamp'], infer_datetime_format=True)
 btc_df.head()
 
 # Drop NAs and calculate daily percent return
-btc_df['daily_return'] = btc_df['Close'].dropna().pct_change()
-btc_df
+#btc_df['daily_return'] = btc_df['Close'].dropna().pct_change()
+#btc_df
 
 # Set short and long windows
 short_window = 1
