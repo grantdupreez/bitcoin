@@ -50,9 +50,9 @@ btc_df['bollinger_signal'] = btc_df['bollinger_long'] + btc_df['bollinger_short'
 fig, ax = plt.subplots()
 ax = btc_df[['Close','bollinger_mid_band','bollinger_upper_band','bollinger_lower_band']].plot(figsize=(20,10))
 
-st.pyplot(fig)
+plt.pyplot(fig)
 
 #plt.plot(
 #  btc_df[['Close','bollinger_mid_band','bollinger_upper_band','bollinger_lower_band']].plot(figsize=(20,10)))
 
-fig
+#fig
