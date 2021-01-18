@@ -53,7 +53,7 @@ st.write("Set bollinger band window")
 btc_df
 
 # Plot the Bollinger Bands for BTC/USD closing prices
-fig = go.Figure(data=[go.Candlestick(x=df['Timestamp'],
+fig = go.Figure(data=[go.Candlestick(x=btc_df['Timestamp'],
                 open=btc_df['Open'],
                 high=btc_df['High'],
                 low=btc_df['Low'],
