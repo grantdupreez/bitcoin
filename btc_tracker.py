@@ -53,21 +53,10 @@ btc_df
 
 # Plot the Bollinger Bands for BTC/USD closing prices
 
+fig, ax = plt.subplots()
+
 fig = plt.figure(figsize=(20,10))
-fig = plt.plot(btc_df[['Close','bollinger_mid_band','bollinger_upper_band','bollinger_lower_band']])
-#plt.plot(df.index, signal, label='Signal Line', color='red')
-#plt.xticks(rotation=45)
-#plt.legend(loc='upper left')
+#fig = plt.plot(btc_df[['Close','bollinger_mid_band','bollinger_upper_band','bollinger_lower_band']])
+ax.plot(btc_df[['Close','bollinger_mid_band','bollinger_upper_band','bollinger_lower_band']])
 
-#fig = plt.show()
 st.pyplot(fig)
-
-#fig = plt.subplots()
-#fig = btc_df[['Close','bollinger_mid_band','bollinger_upper_band','bollinger_lower_band']].plot(figsize=(20,10))
-
-#plt.plot()
-
-#plt.plot(
-#  btc_df[['Close','bollinger_mid_band','bollinger_upper_band','bollinger_lower_band']].plot(figsize=(20,10)))
-
-#fig
