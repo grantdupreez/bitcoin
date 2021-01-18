@@ -7,7 +7,7 @@ import plotly.graph_objects as go
 import plotly.express as px
 import warnings
 import requests
-import pandas as pd
+import html5lib
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
 
