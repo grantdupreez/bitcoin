@@ -55,9 +55,9 @@ btc_df
 # Plot the Bollinger Bands for BTC/USD closing prices
 fig = go.Figure(data=[go.Candlestick(x=df['Timestamp'],
                 open=btc_df['Open'],
-                high=df['High'],
-                low=df['Low'],
-                close=df['Close'])])
+                high=btc_df['High'],
+                low=btc_df['Low'],
+                close=btc_df['Close'])])
 
 #fig = go.Figure([go.Scatter(x=btc_df['Timestamp'], y=btc_df[['Close','bollinger_mid_band','bollinger_upper_band','bollinger_lower_band']])])
 
