@@ -14,7 +14,7 @@ btc_df.head()
 
 # Set index as datetime object and drop columns
 btc_df.set_index(pd.to_datetime(btc_df['Timestamp'], infer_datetime_format=True), inplace=True)
-btc_df.drop(columns=['Timestamp'], inplace=True)
+#btc_df.drop(columns=['Timestamp'], inplace=True)
 btc_df.head()
 
 # Drop NAs and calculate daily percent return
