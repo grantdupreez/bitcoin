@@ -2,8 +2,8 @@
 import pandas as pd
 import numpy as np
 from pathlib import Path
-#import matplotlib.pyplot as plt
-%matplotlib inline
+import matplotlib.pyplot as plt
+#%matplotlib inline
 import warnings
 warnings.filterwarnings('ignore')
 # Set path to CSV and read in CSV
