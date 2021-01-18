@@ -15,27 +15,27 @@ from bs4 import BeautifulSoup
 
 #collect data
 
-number_of_months = 3
-now = datetime.now()
-dt_end = now.strftime("%Y%m%d")
-dt_start = (now - relativedelta(months=number_of_months)).strftime("%Y%m%d")
+#number_of_months = 3
+#now = datetime.now()
+#dt_end = now.strftime("%Y%m%d")
+#dt_start = (now - relativedelta(months=number_of_months)).strftime("%Y%m%d")
 
-url = f'https://coinmarketcap.com/currencies/bitcoin/historical-data/?start={dt_start}&end={dt_end}'
-# Make the request and parse the tree
-response = requests.get(url, timeout=5)
-tree = lxml.html.fromstring(response.text)
-# Extract table and raw data
-table = tree.find_class('table-responsive')[0]
-raw_data = [_.text_content() for _ in table.find_class('text-right')]
-# Process the data
-col_names = ['Date'] + raw_data[:6]
-row_list = []
-for x in raw_data[6:]:
-    _, date, _open, _high, _low, _close, _vol, _m_cap, _ = x.replace(',', '').split('\n')
-    row_list.append([date, float_helper(_open), float_helper(_high), float_helper(_low),
-    float_helper(_close), float_helper(_vol), float_helper(_m_cap)])
-raw_data = pd.DataFrame(data=row_list, columns=col_names)
-st.write(raw_data)
+#url = f'https://coinmarketcap.com/currencies/bitcoin/historical-data/?start={dt_start}&end={dt_end}'
+## Make the request and parse the tree
+#response = requests.get(url, timeout=5)
+#tree = lxml.html.fromstring(response.text)
+## Extract table and raw data
+#table = tree.find_class('table-responsive')[0]
+#raw_data = [_.text_content() for _ in table.find_class('text-right')]
+## Process the data
+#col_names = ['Date'] + raw_data[:6]
+#row_list = []
+#for x in raw_data[6:]:
+#    _, date, _open, _high, _low, _close, _vol, _m_cap, _ = x.replace(',', '').split('\n')
+#    row_list.append([date, float_helper(_open), float_helper(_high), float_helper(_low),
+#    float_helper(_close), float_helper(_vol), float_helper(_m_cap)])
+#raw_data = pd.DataFrame(data=row_list, columns=col_names)
+#st.write(raw_data)
 
 
 warnings.filterwarnings('ignore')
