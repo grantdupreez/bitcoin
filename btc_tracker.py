@@ -1,5 +1,6 @@
 # Import libraries and dependencies
 import pandas as pd
+import streamlit as st
 import numpy as np
 from pathlib import Path
 import matplotlib.pyplot as plt
