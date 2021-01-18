@@ -40,7 +40,7 @@ from bs4 import BeautifulSoup
 
 warnings.filterwarnings('ignore')
 # Set path to CSV and read in CSV
-csv_path = Path('sample_data.csv')
+csv_path = Path('BTC_Data.csv')
 btc_df=pd.read_csv(csv_path)
 btc_df.head()
 
