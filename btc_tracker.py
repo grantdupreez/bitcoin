@@ -58,11 +58,11 @@ fig = go.Figure(data=[go.Candlestick(x=btc_df['Timestamp'],
                 high=btc_df['High'],
                 low=btc_df['Low'],
                 close=btc_df['Close']), 
-                      go.Scatter(x=btc_df['Timestamp'], y=btc_df['Close'], line=dict(color='orange', width=1)),
-                      go.Scatter(x=btc_df['Timestamp'], y=btc_df.['bollinger_mid_band'], line=dict(color='green', width=1))
-                      go.Scatter(x=btc_df['Timestamp'], y=btc_df.['bollinger_upper_band'], line=dict(color='red', width=1))
-                      go.Scatter(x=btc_df['Timestamp'], y=btc_df.['bollinger_lower_band'], line=dict(color='blue', width=1))
-                     ])
+                  go.Scatter(x=btc_df['Timestamp'], y=btc_df['Close'], line=dict(color='orange', width=1)),
+                  go.Scatter(x=btc_df['Timestamp'], y=btc_df.['bollinger_mid_band'], line=dict(color='green', width=1))
+                  go.Scatter(x=btc_df['Timestamp'], y=btc_df.['bollinger_upper_band'], line=dict(color='red', width=1))
+                  go.Scatter(x=btc_df['Timestamp'], y=btc_df.['bollinger_lower_band'], line=dict(color='blue', width=1))
+            ])
 
 #fig = go.Figure([go.Scatter(x=btc_df['Timestamp'], y=btc_df[['Close','bollinger_mid_band','bollinger_upper_band','bollinger_lower_band']])])
 
