@@ -60,7 +60,7 @@ fig = plt.plot(btc_df[['Close','bollinger_mid_band','bollinger_upper_band','boll
 #plt.legend(loc='upper left')
 
 #fig = plt.show()
-fig
+st.pyplot(fig)
 
 #fig = plt.subplots()
 #fig = btc_df[['Close','bollinger_mid_band','bollinger_upper_band','bollinger_lower_band']].plot(figsize=(20,10))
