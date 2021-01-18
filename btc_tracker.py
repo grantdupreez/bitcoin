@@ -10,21 +10,36 @@ import requests
 import html5lib
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
+import lxml.html
+from typing import Dict, List
 
 #collect data
-def get_date_range(number_of_months:int):
+
+def get_start_date(number_of_months:int):
     now = datetime.now()
     dt_end = now.strftime("%Y%m%d")
     dt_start = (now - relativedelta(months=number_of_months)).strftime("%Y%m%d")
-    return f'start={dt_start}&end={dt_end}'
+    return dt_start
 
-number_of_months = 3
-
-table = pd.read_html(f'https://coinmarketcap.com/currencies/bitcoin/historical-data/?{get_date_range(number_of_months)}')[0]
-table = table[['Date', 'Open', 'Close**', 'High', 'Low', 'Volume','Market Cap']]
-print(table)
+def coinmarketcap_get_btc(start_date: str, end_date: str) -> List[Dict]:
+    # Build the url
+    url = f'https://coinmarketcap.com/currencies/bitcoin/historical-data/?start={start_date}&end={end_date}'
+    # Make the request and parse the tree
+    response = requests.get(url, timeout=5)
+    tree = lxml.html.fromstring(response.text)
+    # Extract table and raw data
+    table = tree.find_class('cmc-table')[0]
+    xpath_0, xpath_1 = 'div[3]/div/table/thead/tr', 'div[3]/div/table/tbody/tr/td[%d]/div'
+    cols = [_.text_content() for _ in table.xpath(xpath_0 + '/th')]
+    dates = (_.text_content() for _ in table.xpath(xpath_1 % 1))
+    m = map(lambda d: (float(_.text_content().replace(',', '')) for _ in table.xpath(xpath_1 % d)),
+            range(2, 8))
+    return [{k: v for k, v in zip(cols, _)} for _ in zip(dates, *m)]
 
 ############
+number_of_months = 3
+
+coinmarketcap_get_btc(get_start_date(3), dt_end)
 
 warnings.filterwarnings('ignore')
 # Set path to CSV and read in CSV
