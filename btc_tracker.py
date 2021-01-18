@@ -4,6 +4,7 @@ import streamlit as st
 import numpy as np
 from pathlib import Path
 import plotly.graph_objects as go
+import plotly.express as px
 import warnings
 
 warnings.filterwarnings('ignore')
@@ -54,6 +55,6 @@ btc_df
 # Plot the Bollinger Bands for BTC/USD closing prices
 #fig = go.Figure([go.Scatter(x=btc_df['Timestamp'], y=btc_df[['Close','bollinger_mid_band','bollinger_upper_band','bollinger_lower_band']])])
 
-fig = go.line(btc_df, x="Timestamp", y=btc_df.columns)
+fig = px.line(btc_df, x="Timestamp", y=btc_df.columns)
 
 fig
