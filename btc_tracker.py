@@ -11,32 +11,33 @@ from datetime import datetime
 from dateutil.relativedelta import relativedelta
 import lxml.html
 from typing import Dict, List
+from bs4 import BeautifulSoup
 
 #collect data
 
-def coinmarketcap_get_btc(start_date: str, end_date: str) -> List[Dict]:
-    # Build the url
-    url = f'https://coinmarketcap.com/currencies/bitcoin/historical-data/?start={start_date}&end={end_date}'
-    # Make the request and parse the tree
-    response = requests.get(url, timeout=5)
-    tree = lxml.html.fromstring(response.text)
-    # Extract table and raw data
-    table = tree.find_class('cmc-table')[0]
-    xpath_0, xpath_1 = 'div[3]/div/table/thead/tr', 'div[3]/div/table/tbody/tr/td[%d]/div'
-    cols = [_.text_content() for _ in table.xpath(xpath_0 + '/th')]
-    dates = (_.text_content() for _ in table.xpath(xpath_1 % 1))
-    m = map(lambda d: (float(_.text_content().replace(',', '')) for _ in table.xpath(xpath_1 % d)),
-            range(2, 8))
-    return [{k: v for k, v in zip(cols, _)} for _ in zip(dates, *m)]
+def get_coinmarketcap_info(url,s_date,e_date):
+    response = requests.get(url.format(s_date,e_date))
+    soup = BeautifulSoup(response.text,"lxml")
+
+    for items in soup.select("table.table tr.text-right"):
+        date = items.select_one("td.text-left").get_text(strip=True)
+        close = items.select_one("td[data-format-market-cap]").find_previous_sibling().get_text(strip=True)
+        volume = items.select_one("td[data-format-market-cap]").get_text(strip=True)
+        marketcap = items.select_one("td[data-format-market-cap]").find_next_sibling().get_text(strip=True)
+        yield date,close,volume,marketcap
 
 ############
 number_of_months = 3
 now = datetime.now()
 dt_end = now.strftime("%Y%m%d")
 dt_start = (now - relativedelta(months=number_of_months)).strftime("%Y%m%d")
-    
-st.write(coinmarketcap_get_btc(dt_start, dt_end)
+link = 'https://coinmarketcap.com/currencies/bitcoin/historical-data/?start={}&end={}'
 
+dataframe = (elem for elem in get_coinmarketcap_info(link,dt_start,dt_end))
+df = pandas.DataFrame(dataframe)
+print(df)
+    
+    
 warnings.filterwarnings('ignore')
 # Set path to CSV and read in CSV
 csv_path = Path('sample_data.csv')
