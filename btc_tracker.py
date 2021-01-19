@@ -13,40 +13,20 @@ import lxml.html
 from typing import Dict, List
 from bs4 import BeautifulSoup
 
-#collect data
-
-#number_of_months = 3
-#now = datetime.now()
-#dt_end = now.strftime("%Y%m%d")
-#dt_start = (now - relativedelta(months=number_of_months)).strftime("%Y%m%d")
-
-#url = f'https://coinmarketcap.com/currencies/bitcoin/historical-data/?start={dt_start}&end={dt_end}'
-## Make the request and parse the tree
-#response = requests.get(url, timeout=5)
-#tree = lxml.html.fromstring(response.text)
-## Extract table and raw data
-#table = tree.find_class('table-responsive')[0]
-#raw_data = [_.text_content() for _ in table.find_class('text-right')]
-## Process the data
-#col_names = ['Date'] + raw_data[:6]
-#row_list = []
-#for x in raw_data[6:]:
-#    _, date, _open, _high, _low, _close, _vol, _m_cap, _ = x.replace(',', '').split('\n')
-#    row_list.append([date, float_helper(_open), float_helper(_high), float_helper(_low),
-#    float_helper(_close), float_helper(_vol), float_helper(_m_cap)])
-#raw_data = pd.DataFrame(data=row_list, columns=col_names)
-#st.write(raw_data)
-
+# to be replaced with an upload
+uploaded_file = st.sidebar.file_uploader("Choose a file",type=['CSV'])
+if uploaded_file is not None:
+    btc_df = pd.read_csv(uploaded_file, header=[0])
+    btc_df.head()
 
 warnings.filterwarnings('ignore')
 # Set path to CSV and read in CSV
-csv_path = Path('BTC_Data.csv')
-btc_df=pd.read_csv(csv_path)
-btc_df.head()
+#csv_path = Path('BTC_Data.csv')
+#btc_df=pd.read_csv(csv_path)
+#btc_df.head()
 
 # Set index as datetime object and drop columns
 btc_df.set_index(pd.to_datetime(btc_df['Timestamp'], infer_datetime_format=True), inplace=True)
-#btc_df.drop(columns=['Timestamp'], inplace=True)
 btc_df.head()
 
 # Drop NAs and calculate daily percent return
