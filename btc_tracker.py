@@ -74,5 +74,5 @@ if uploaded_file is not None:
 
     st.write("Market Cap")
  #   btc_df = px.data.tips()
-    fig = px.histogram(btc_df, x="market_cap")
+    fig = px.histogram(btc_df, x="Market_Cap")
     fig
