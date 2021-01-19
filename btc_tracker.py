@@ -75,3 +75,7 @@ if uploaded_file is not None:
     st.write("Market Cap")
     fig = px.histogram(btc_df, x="Timestamp", y="Market_Cap")
     fig
+
+    st.write("Volume")
+    fig = px.histogram(btc_df, x="Timestamp", y="Volume")
+    fig
