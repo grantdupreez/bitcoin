@@ -69,7 +69,10 @@ if uploaded_file is not None:
                       go.Scatter(x=btc_df.Timestamp, y=btc_df.bollinger_mid_band, line=dict(color='green', width=1)),
                       go.Scatter(x=btc_df.Timestamp, y=btc_df.bollinger_upper_band, line=dict(color='red', width=1)),
                       go.Scatter(x=btc_df.Timestamp, y=btc_df.bollinger_lower_band, line=dict(color='blue', width=1)),
-                      go.bar(x=btc_df.Timestamp, y=btc_df.Market_Cap)
-
                 ])
+    fig
+
+    st.write("Market Cap")
+    btc_df = px.data.tips()
+    fig = px.histogram(btc_df, x="market_cap")
     fig
