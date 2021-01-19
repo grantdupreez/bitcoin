@@ -43,6 +43,52 @@ if uploaded_file is not None:
     #st.write("Set short and long windows")
     #btc_df
 
+    st.write("EMA of Closing prices")
+    fig = go.Figure()
+    fig.add_trace(go.Scatter(x=btc_df.Timestamp, y=btc_df['Close'],
+                    mode='lines',
+                    name='Close'))
+    fig.add_trace(go.Scatter(x=btc_df.Timestamp, y=btc_df.fast_close,
+                    mode='lines',
+                    name='Fast Close'))
+    fig.add_trace(go.Scatter(x=btc_df.Timestamp, y=btc_df.slow_close,
+                    mode='lines',
+                    name='Slow Close'))
+   fig.add_trace(go.Scatter(x=btc_df.Timestamp, y=btc_df.crossover_long,
+                    mode='markers',
+                    name='Crossover Long'))
+   fig.add_trace(go.Scatter(x=btc_df.Timestamp, y=btc_df.crossover_short,
+                    mode='markers',
+                    name='Crossover short'))
+   fig.add_trace(go.Scatter(x=btc_df.Timestamp, y=btc_df.crossover_signal,
+                    mode='markers',
+                    name='Crossover signal'))
+     
+    fig
+    
+#    st.write("EMA of Daily Return Volatility")
+#    fig = go.Figure()
+#    fig.add_trace(go.Scatter(x=btc_df.Timestamp, y=btc_df['Close'],
+#                    mode='lines',
+#                    name='Close'))
+#    fig.add_trace(go.Scatter(x=btc_df.Timestamp, y=btc_df.fast_close,
+#                    mode='lines',
+#                    name='Fast Close'))
+#    fig.add_trace(go.Scatter(x=btc_df.Timestamp, y=btc_df.slow_close,
+#                    mode='lines',
+#                    name='Slow Close'))
+#   fig.add_trace(go.Scatter(x=btc_df.Timestamp, y=btc_df.crossover_long,
+#                    mode='markers',
+#                    name='Crossover Long'))
+#   fig.add_trace(go.Scatter(x=btc_df.Timestamp, y=btc_df.crossover_short,
+#                    mode='markers',
+#                    name='Crossover short'))
+#   fig.add_trace(go.Scatter(x=btc_df.Timestamp, y=btc_df.crossover_signal,
+#                    mode='markers',
+#                    name='Crossover signal'))
+#     
+#    fig
+    
 
     # Set bollinger band window
     bollinger_window = 20
@@ -60,6 +106,8 @@ if uploaded_file is not None:
     #btc_df
 
     # Plot 
+    st.write("Bollinger Bands")
+
     fig = go.Figure(data=[go.Candlestick(x=btc_df['Timestamp'],
                     open=btc_df['Open'],
                     high=btc_df['High'],
