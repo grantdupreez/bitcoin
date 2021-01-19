@@ -69,6 +69,7 @@ if uploaded_file is not None:
     fig
     
     st.write("EMA of Daily Return Volatility")
+    st.write("Exponential moving average (EMA) of the closing prices represents a moving average with more weight on the most recent of prices")
     fig = go.Figure()
     fig.add_trace(go.Scatter(x=btc_df.Timestamp, y=btc_df['slow_close'],
                     mode='lines',
