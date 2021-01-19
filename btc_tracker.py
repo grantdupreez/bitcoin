@@ -54,13 +54,13 @@ if uploaded_file is not None:
     fig.add_trace(go.Scatter(x=btc_df.Timestamp, y=btc_df.slow_close,
                     mode='lines',
                     name='Slow Close'))
-   fig.add_trace(go.Scatter(x=btc_df.Timestamp, y=btc_df.crossover_long,
+    fig.add_trace(go.Scatter(x=btc_df.Timestamp, y=btc_df.crossover_long,
                     mode='markers',
                     name='Crossover Long'))
-   fig.add_trace(go.Scatter(x=btc_df.Timestamp, y=btc_df.crossover_short,
+    fig.add_trace(go.Scatter(x=btc_df.Timestamp, y=btc_df.crossover_short,
                     mode='markers',
                     name='Crossover short'))
-   fig.add_trace(go.Scatter(x=btc_df.Timestamp, y=btc_df.crossover_signal,
+    fig.add_trace(go.Scatter(x=btc_df.Timestamp, y=btc_df.crossover_signal,
                     mode='markers',
                     name='Crossover signal'))
      
