@@ -71,11 +71,11 @@ if uploaded_file is not None:
                       go.Scatter(x=btc_df.Timestamp, y=btc_df.bollinger_lower_band, line=dict(color='blue', width=1), name='Lower'),
                 ])
     fig
+    
+    st.write("Volume")
+    fig = px.histogram(btc_df, x="Timestamp", y="Volume")
+    fig
 
     st.write("Market Cap")
     fig = px.histogram(btc_df, x="Timestamp", y="Market_Cap")
-    fig
-
-    st.write("Volume")
-    fig = px.histogram(btc_df, x="Timestamp", y="Volume")
     fig
