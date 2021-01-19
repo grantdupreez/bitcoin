@@ -13,6 +13,8 @@ import lxml.html
 from typing import Dict, List
 from bs4 import BeautifulSoup
 
+st.title("Bitcoin Market Analysis")
+
 # to be replaced with an upload
 uploaded_file = st.sidebar.file_uploader("Choose a file",type=['CSV'])
 if uploaded_file is not None:
