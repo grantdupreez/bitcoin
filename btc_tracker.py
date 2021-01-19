@@ -54,40 +54,27 @@ if uploaded_file is not None:
     fig.add_trace(go.Scatter(x=btc_df.Timestamp, y=btc_df.slow_close,
                     mode='lines',
                     name='Slow Close'))
-    fig.add_trace(go.Scatter(x=btc_df.Timestamp, y=btc_df.crossover_long,
-                    mode='markers',
-                    name='Crossover Long'))
-    fig.add_trace(go.Scatter(x=btc_df.Timestamp, y=btc_df.crossover_short,
-                    mode='markers',
-                    name='Crossover short'))
+#    fig.add_trace(go.Scatter(x=btc_df.Timestamp, y=btc_df.crossover_long,
+#                    mode='markers',
+#                    name='Crossover Long'))
+#    fig.add_trace(go.Scatter(x=btc_df.Timestamp, y=btc_df.crossover_short,
+#                    mode='markers',
+#                    name='Crossover short'))
     fig.add_trace(go.Scatter(x=btc_df.Timestamp, y=btc_df.crossover_signal,
                     mode='markers',
                     name='Crossover signal'))
      
     fig
     
-#    st.write("EMA of Daily Return Volatility")
-#    fig = go.Figure()
-#    fig.add_trace(go.Scatter(x=btc_df.Timestamp, y=btc_df['Close'],
-#                    mode='lines',
-#                    name='Close'))
-#    fig.add_trace(go.Scatter(x=btc_df.Timestamp, y=btc_df.fast_close,
-#                    mode='lines',
-#                    name='Fast Close'))
-#    fig.add_trace(go.Scatter(x=btc_df.Timestamp, y=btc_df.slow_close,
-#                    mode='lines',
-#                    name='Slow Close'))
-#   fig.add_trace(go.Scatter(x=btc_df.Timestamp, y=btc_df.crossover_long,
-#                    mode='markers',
-#                    name='Crossover Long'))
-#   fig.add_trace(go.Scatter(x=btc_df.Timestamp, y=btc_df.crossover_short,
-#                    mode='markers',
-#                    name='Crossover short'))
-#   fig.add_trace(go.Scatter(x=btc_df.Timestamp, y=btc_df.crossover_signal,
-#                    mode='markers',
-#                    name='Crossover signal'))
-#     
-#    fig
+    st.write("EMA of Daily Return Volatility")
+    fig = go.Figure()
+    fig.add_trace(go.Scatter(x=btc_df.Timestamp, y=btc_df['slow_close'],
+                    mode='lines',
+                    name='Slow Close'))
+    fig.add_trace(go.Scatter(x=btc_df.Timestamp, y=btc_df.fast_close,
+                    mode='lines',
+                    name='Fast Close'))
+    fig
     
 
     # Set bollinger band window
