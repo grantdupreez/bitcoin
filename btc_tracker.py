@@ -12,7 +12,7 @@ from dateutil.relativedelta import relativedelta
 import lxml.html
 from typing import Dict, List
 from bs4 import BeautifulSoup
-import yfinance as yf
+#import yfinance as yf
 
 st.title("Bitcoin Market Analysis")
 
