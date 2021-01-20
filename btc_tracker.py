@@ -42,8 +42,8 @@ if uploaded_file is not None:
     btc_df['crossover_short'] = np.where(btc_df['fast_close'] < btc_df['slow_close'], -1.0, 0.0)
     btc_df['crossover_signal'] = btc_df['crossover_long'] + btc_df['crossover_short']
     btc_df.head()
-    #st.write("Set short and long windows")
-    #btc_df
+    st.write("Set short and long windows")
+    btc_df
 
     st.write("EMA of Closing prices")
     fig = go.Figure()
@@ -92,8 +92,8 @@ if uploaded_file is not None:
     btc_df['bollinger_long'] = np.where(btc_df['Close'] < btc_df['bollinger_lower_band'], 1.0, 0.0)
     btc_df['bollinger_short'] = np.where(btc_df['Close'] > btc_df['bollinger_upper_band'], -1.0, 0.0)
     btc_df['bollinger_signal'] = btc_df['bollinger_long'] + btc_df['bollinger_short']
-    #st.write("Set bollinger band window")
-    #btc_df
+    st.write("Set bollinger band window")
+    btc_df
 
     # Plot 
     st.write("Bollinger Bands")
