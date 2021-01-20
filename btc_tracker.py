@@ -16,7 +16,7 @@ BTC_Data = yf.Ticker(Bitcoin)
 st.write(BTC_Data)
 
 today = datetime.today()
-st_date = today - datetime.timedelta(days=30)
+st_date = today - timedelta(days=30)
 start_date = st.sidebar.date_input("Start Date", st_date)
 #end_date = st.sidebar.text_input("End Date", f'{today}')
 
