@@ -58,7 +58,7 @@ if uploaded_file is not None:
     fig.add_trace(go.Scatter(x=btc_df.Timestamp, y=btc_df.slow_close,
                     mode='lines',
                     name='SMA = 10'))
-    if btc_df['Close'] > 0
+    if btc_df['Close'] > 0:
         fig.add_trace(go.Scatter(x=btc_df.Timestamp, btc_df['Close'],
                     mode='markers',
                     name='Crossover signal'))
