@@ -19,7 +19,7 @@ st.title("Bitcoin Market Analysis")
 Bitcoin = 'BTC-USD'
 BTC_Data = yf.Ticker(Bitcoin)
 y_df = BTC_Data.history(period="max")
-y_df.rename(columns={ y_df.columns[0]: "Timeframe" }, inplace = True)
+#y_df.rename(columns={ y_df.columns[0]: "Timeframe" }, inplace = True)
 st.write(y_df)
 
 # to be replaced with an upload
