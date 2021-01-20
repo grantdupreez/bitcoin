@@ -2,16 +2,16 @@
 import pandas as pd
 import streamlit as st
 import numpy as np
-from pathlib import Path
+#from pathlib import Path
 import plotly.graph_objects as go
 import plotly.express as px
 import warnings
-import requests
+#import requests
 from datetime import datetime
-from dateutil.relativedelta import relativedelta
-import lxml.html
-from typing import Dict, List
-from bs4 import BeautifulSoup
+#from dateutil.relativedelta import relativedelta
+#import lxml.html
+#from typing import Dict, List
+#from bs4 import BeautifulSoup
 import yfinance as yf
 
 st.title("Bitcoin Market Analysis")
