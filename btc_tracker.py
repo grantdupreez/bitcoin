@@ -16,6 +16,12 @@ import yfinance as yf
 
 st.title("Bitcoin Market Analysis")
 
+Bitcoin = 'BTC-USD'
+BTC_Data = yf.Ticker(Bitcoin)
+BTCHis = BTC_Data.history(period="max")
+st.write(BTCHis)
+
+
 # to be replaced with an upload
 uploaded_file = st.sidebar.file_uploader("Choose a file",type=['CSV'])
 if uploaded_file is not None:
