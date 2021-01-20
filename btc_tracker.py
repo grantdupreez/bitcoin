@@ -6,6 +6,7 @@ import plotly.graph_objects as go
 import plotly.express as px
 import warnings
 from datetime import datetime
+from datetime import timedelta
 import yfinance as yf
 
 st.title("Bitcoin Market Analysis")
