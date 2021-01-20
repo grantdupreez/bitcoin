@@ -18,6 +18,8 @@ st.title("Bitcoin Market Analysis")
 
 Bitcoin = 'BTC-USD'
 BTC_Data = yf.Ticker(Bitcoin)
+st.write(BTC_Data)
+
 y_df = BTC_Data.history(period="max")
 y_df = y_df.reset_index()
 for i in ['Open', 'High', 'Close', 'Low']: 
