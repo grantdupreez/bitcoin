@@ -34,6 +34,7 @@ if uploaded_file is not None:
     # Set short and long windows
     short_window = 1
     long_window = 10
+    st.write("Short window set to: 1 / Long window set to: 10")
     # Construct a `Fast` and `Slow` Exponential Moving Average from short and long windows, respectively
     btc_df['fast_close'] = btc_df['Close'].ewm(halflife=short_window).mean()
     btc_df['slow_close'] = btc_df['Close'].ewm(halflife=long_window).mean()
@@ -108,6 +109,9 @@ if uploaded_file is not None:
                       go.Scatter(x=btc_df.Timestamp, y=btc_df.bollinger_upper_band, line=dict(color='red', width=1), name='Upper'),
                       go.Scatter(x=btc_df.Timestamp, y=btc_df.bollinger_lower_band, line=dict(color='blue', width=1), name='Lower'),
                 ])
+        fig.add_trace(go.Scatter(x=btc_df.Timestamp, y=btc_df.crossover_signal,
+                    mode='markers',
+                    name='Crossover signal'))
     fig
     
     st.write("Volume")
