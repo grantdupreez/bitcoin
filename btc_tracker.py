@@ -2,16 +2,10 @@
 import pandas as pd
 import streamlit as st
 import numpy as np
-#from pathlib import Path
 import plotly.graph_objects as go
 import plotly.express as px
 import warnings
-#import requests
 from datetime import datetime
-#from dateutil.relativedelta import relativedelta
-#import lxml.html
-#from typing import Dict, List
-#from bs4 import BeautifulSoup
 import yfinance as yf
 
 st.title("Bitcoin Market Analysis")
@@ -20,7 +14,7 @@ Bitcoin = 'BTC-USD'
 BTC_Data = yf.Ticker(Bitcoin)
 st.write(BTC_Data)
 
-today = datetime.date.today()
+today = datetime.today()
 start_date = st.sidebar.text_input("Start Date", '2020-10-01')
 end_date = st.sidebar.text_input("End Date", f'{today}')
 
@@ -28,7 +22,6 @@ y_df = BTC_Data.history(start=start_date, end=end_date)
 y_df = y_df.reset_index()
 for i in ['Open', 'High', 'Close', 'Low']: 
       y_df[i]  =  y_df[i].astype('float64')
-#y_df.rename(columns={y_df.columns[0]: "Timestamp"})
 st.write(y_df)
 
 # to be replaced with an upload
