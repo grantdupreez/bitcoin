@@ -102,7 +102,7 @@ btc_df['bollinger_long'] = np.where(btc_df['Close'] < btc_df['bollinger_lower_ba
 btc_df['bollinger_short'] = np.where(btc_df['Close'] > btc_df['bollinger_upper_band'], -1.0, 0.0)
 btc_df['bollinger_signal'] = btc_df['bollinger_long'] + btc_df['bollinger_short']
 st.write("Set bollinger band window - window: 20")
-btc_df
+#btc_df
 
 # Plot 
 st.write("Bollinger Bands")
