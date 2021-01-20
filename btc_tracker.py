@@ -129,6 +129,6 @@ st.write("Volume")
 fig = px.histogram(btc_df, x="Date", y="Volume")
 fig
 
-st.write("Market Cap")
-fig = px.histogram(btc_df, x="Date", y="Market_Cap")
-fig
+#st.write("Market Cap")
+#fig = px.histogram(btc_df, x="Date", y="Market_Cap")
+#fig
