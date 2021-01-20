@@ -22,7 +22,7 @@ y_df = BTC_Data.history(period="max")
 y_df = y_df.reset_index()
 for i in ['Open', 'High', 'Close', 'Low']: 
       y_df[i]  =  y_df[i].astype('float64')
-y_df.rename(Date: Timestamp)
+y_df.rename(columns={"Date": "Timestamp"})
 st.write(y_df)
 
 # to be replaced with an upload
