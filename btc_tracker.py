@@ -127,5 +127,5 @@ fig = go.Figure(data=[go.Candlestick(x=btc_df['Date'],
 fig
 
 st.write("Volume")
-fig = px.scatter(btc_df, x="Date", y="Volume")
+fig = px.bar(btc_df, x="Date", y="Volume")
 fig
