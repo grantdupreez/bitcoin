@@ -20,7 +20,11 @@ Bitcoin = 'BTC-USD'
 BTC_Data = yf.Ticker(Bitcoin)
 st.write(BTC_Data)
 
-y_df = BTC_Data.history(start="2019-06-01")
+today = datetime.date.today()
+start_date = st.sidebar.text_input("Start Date", '2020-10-01')
+end_date = st.sidebar.text_input("End Date", f'{today}')
+
+y_df = BTC_Data.history(start=start_date, end=end_date)
 y_df = y_df.reset_index()
 for i in ['Open', 'High', 'Close', 'Low']: 
       y_df[i]  =  y_df[i].astype('float64')
