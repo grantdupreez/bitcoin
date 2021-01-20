@@ -13,14 +13,11 @@ st.title("Bitcoin Market Analysis")
 
 Bitcoin = 'BTC-USD'
 BTC_Data = yf.Ticker(Bitcoin)
-st.write(BTC_Data)
 
 today = datetime.today()
 st_date = today - timedelta(days=30)
 start_date = st.sidebar.date_input("Start Date", st_date)
-#end_date = st.sidebar.text_input("End Date", f'{today}')
 
-#y_df = BTC_Data.history(start=start_date, end=end_date)
 y_df = BTC_Data.history(start=start_date)
 
 y_df = y_df.reset_index()
@@ -28,7 +25,7 @@ for i in ['Open', 'High', 'Close', 'Low']:
       y_df[i]  =  y_df[i].astype('float64')
 st.write(y_df)
 
-# to be replaced with an upload
+# optional replacement with an upload
 #uploaded_file = st.sidebar.file_uploader("Choose a file",type=['CSV'])
 #if uploaded_file is not None:
 #    btc_df = pd.read_csv(uploaded_file, header=[0])
@@ -44,7 +41,7 @@ btc_df.head()
 
 # Drop NAs and calculate daily percent return
 btc_df['daily_return'] = btc_df['Close'].dropna().pct_change()
-btc_df
+#btc_df
 
 # Set short and long windows
 short_window = 1
@@ -60,7 +57,7 @@ btc_df['slow_close'] = btc_df['Close'].ewm(halflife=long_window).mean()
 btc_df['signal'] = np.where(btc_df['fast_close'] > btc_df['slow_close'], btc_df['Close'], None)
 btc_df.head()
 st.write("Set short and long windows")
-btc_df
+#btc_df
 
 st.write("EMA of Closing prices")
 fig = go.Figure()
@@ -104,7 +101,7 @@ btc_df['bollinger_lower_band']  = btc_df['bollinger_mid_band'] - (btc_df['bollin
 btc_df['bollinger_long'] = np.where(btc_df['Close'] < btc_df['bollinger_lower_band'], 1.0, 0.0)
 btc_df['bollinger_short'] = np.where(btc_df['Close'] > btc_df['bollinger_upper_band'], -1.0, 0.0)
 btc_df['bollinger_signal'] = btc_df['bollinger_long'] + btc_df['bollinger_short']
-st.write("Set bollinger band window")
+st.write("Set bollinger band window - window: 20")
 btc_df
 
 # Plot 
@@ -126,9 +123,9 @@ fig = go.Figure(data=[go.Candlestick(x=btc_df['Date'],
 #                    name='Signal'))
 fig
 
-st.write("Volume")
-fig = px.histogram(btc_df, x="Date", y="Volume")
-fig
+#st.write("Volume")
+#fig = px.histogram(btc_df, x="Date", y="Volume")
+#fig
 
 #st.write("Market Cap")
 #fig = px.histogram(btc_df, x="Date", y="Market_Cap")
