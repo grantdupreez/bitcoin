@@ -73,7 +73,7 @@ fig.add_trace(go.Scatter(x=btc_df.Date, y=btc_df.slow_close,
             mode='lines',
             name='SMA = 10'))
 if btc_df['signal'] is not None:
-fig.add_trace(go.Scatter(x=btc_df.Date, y=btc_df['Close'],
+      fig.add_trace(go.Scatter(x=btc_df.Date, y=btc_df['Close'],
             mode='markers',
             name='Signal'))
 
