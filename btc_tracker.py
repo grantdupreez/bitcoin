@@ -19,7 +19,7 @@ st.title("Bitcoin Market Analysis")
 Bitcoin = 'BTC-USD'
 BTC_Data = yf.Ticker(Bitcoin)
 btc_df = BTC_Data.history(period="max")
-
+st.write(btc_df)
 
 # to be replaced with an upload
 uploaded_file = st.sidebar.file_uploader("Choose a file",type=['CSV'])
