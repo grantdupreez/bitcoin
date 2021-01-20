@@ -20,7 +20,7 @@ Bitcoin = 'BTC-USD'
 BTC_Data = yf.Ticker(Bitcoin)
 y_df = BTC_Data.history(period="max")
 y_df.rename(columns={ y_df.columns[0]: "Timeframe" }, inplace = True)
-st.write(btc_df)
+st.write(y_df)
 
 # to be replaced with an upload
 uploaded_file = st.sidebar.file_uploader("Choose a file",type=['CSV'])
