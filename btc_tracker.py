@@ -19,7 +19,7 @@ start_date = st.sidebar.text_input("Start Date", '2020-10-01')
 #end_date = st.sidebar.text_input("End Date", f'{today}')
 
 #y_df = BTC_Data.history(start=start_date, end=end_date)
-#y_df = BTC_Data.history(start=start_date)
+y_df = BTC_Data.history(start=start_date)
 
 y_df = y_df.reset_index()
 for i in ['Open', 'High', 'Close', 'Low']: 
