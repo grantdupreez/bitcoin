@@ -1,92 +1,94 @@
-import streamlit as st
-import datetime 
-import talib 
-import ta
 import pandas as pd
-import requests
-import yfinance as yf
-yf.pdr_override()
+import streamlit as st
+import yfinance
 
-st.write("""
-# Technical Analysis Web Application
-Shown below are the **Moving Average Crossovers**, **Bollinger Bands**, **MACD's**, **Commodity Channel Indexes**, and **Relative Strength Indexes** of any stock!
-""")
 
-st.sidebar.header('User Input Parameters')
+@st.cache
+def load_data():
+    components = pd.read_html(
+        "https://en.wikipedia.org/wiki/List_of_S" "%26P_500_companies"
+    )[0]
+    return components.drop("SEC filings", axis=1).set_index("Symbol")
 
-today = datetime.date.today()
-def user_input_features():
-    ticker = st.sidebar.text_input("Ticker", 'AAPL')
-    start_date = st.sidebar.text_input("Start Date", '2019-01-01')
-    end_date = st.sidebar.text_input("End Date", f'{today}')
-    return ticker, start_date, end_date
 
-symbol, start, end = user_input_features()
+@st.cache(allow_output_mutation=True)
+def load_quotes(asset):
+    return yfinance.download(asset)
 
-def get_symbol(symbol):
-    url = "http://d.yimg.com/autoc.finance.yahoo.com/autoc?query={}&region=1&lang=en".format(symbol)
-    result = requests.get(url).json()
-    for x in result['ResultSet']['Result']:
-        if x['symbol'] == symbol:
-            return x['name']
-company_name = get_symbol(symbol.upper())
 
-start = pd.to_datetime(start)
-end = pd.to_datetime(end)
+def main():
+    components = load_data()
+    title = st.empty()
+    st.sidebar.title("Options")
 
-# Read data 
-data = yf.download(symbol,start,end)
+    def label(symbol):
+        a = components.loc[symbol]
+        return symbol + " - " + a.Security
 
-# Adjusted Close Price
-st.header(f"Adjusted Close Price\n {company_name}")
-st.line_chart(data['Adj Close'])
+    if st.sidebar.checkbox("View companies list"):
+        st.dataframe(
+            components[["Security", "GICS Sector", "Date first added", "Founded"]]
+        )
 
-# ## SMA and EMA
-#Simple Moving Average
-data['SMA'] = talib.SMA(data['Adj Close'], timeperiod = 20)
+    st.sidebar.subheader("Select asset")
+    asset = st.sidebar.selectbox(
+        "Click below to select a new asset",
+        components.index.sort_values(),
+        index=3,
+        format_func=label,
+    )
+    title.title(components.loc[asset].Security)
+    if st.sidebar.checkbox("View company info", True):
+        st.table(components.loc[asset])
+    data0 = load_quotes(asset)
+    data = data0.copy().dropna()
+    data.index.name = None
 
-# Exponential Moving Average
-data['EMA'] = talib.EMA(data['Adj Close'], timeperiod = 20)
+    section = st.sidebar.slider(
+        "Number of quotes",
+        min_value=30,
+        max_value=min([2000, data.shape[0]]),
+        value=500,
+        step=10,
+    )
 
-# Plot
-st.header(f"Simple Moving Average vs. Exponential Moving Average\n {company_name}")
-st.line_chart(data[['Adj Close','SMA','EMA']])
+    data2 = data[-section:]["Adj Close"].to_frame("Adj Close")
 
-# Bollinger Bands
-data['upper_band'], data['middle_band'], data['lower_band'] = talib.BBANDS(data['Adj Close'], timeperiod =20)
+    sma = st.sidebar.checkbox("SMA")
+    if sma:
+        period = st.sidebar.slider(
+            "SMA period", min_value=5, max_value=500, value=20, step=1
+        )
+        data[f"SMA {period}"] = data["Adj Close"].rolling(period).mean()
+        data2[f"SMA {period}"] = data[f"SMA {period}"].reindex(data2.index)
 
-# Plot
-st.header(f"Bollinger Bands\n {company_name}")
-st.line_chart(data[['Adj Close','upper_band','middle_band','lower_band']])
+    sma2 = st.sidebar.checkbox("SMA2")
+    if sma2:
+        period2 = st.sidebar.slider(
+            "SMA2 period", min_value=5, max_value=500, value=100, step=1
+        )
+        data[f"SMA2 {period2}"] = data["Adj Close"].rolling(period2).mean()
+        data2[f"SMA2 {period2}"] = data[f"SMA2 {period2}"].reindex(data2.index)
 
-# ## MACD (Moving Average Convergence Divergence)
-# MACD
-data['macd'], data['macdsignal'], data['macdhist'] = talib.MACD(data['Adj Close'], fastperiod=12, slowperiod=26, signalperiod=9)
+    st.subheader("Chart")
+    st.line_chart(data2)
 
-# Plot
-st.header(f"Moving Average Convergence Divergence\n {company_name}")
-st.line_chart(data[['macd','macdsignal']])
+    if st.sidebar.checkbox("View stadistic"):
+        st.subheader("Stadistic")
+        st.table(data2.describe())
 
-## CCI (Commodity Channel Index)
-# CCI
-cci = ta.trend.cci(data['High'], data['Low'], data['Close'], n=31, c=0.015)
+    if st.sidebar.checkbox("View quotes"):
+        st.subheader(f"{asset} historical data")
+        st.write(data2)
 
-# Plot
-st.header(f"Commodity Channel Index\n {company_name}")
-st.line_chart(cci)
+    st.sidebar.title("About")
+    st.sidebar.info(
+        "This app is a simple example of "
+        "using Strealit to create a financial data web app.\n"
+        "\nIt is maintained by [Paduel]("
+        "https://twitter.com/paduel_py).\n\n"
+        "Check the code at https://github.com/paduel/streamlit_finance_chart"
+    )
 
-# ## RSI (Relative Strength Index)
-# RSI
-data['RSI'] = talib.RSI(data['Adj Close'], timeperiod=14)
 
-# Plot
-st.header(f"Relative Strength Index\n {company_name}")
-st.line_chart(data['RSI'])
-
-# ## OBV (On Balance Volume)
-# OBV
-data['OBV'] = talib.OBV(data['Adj Close'], data['Volume'])/10**6
-
-# Plot
-st.header(f"On Balance Volume\n {company_name}")
-st.line_chart(data['OBV'])
+main()
