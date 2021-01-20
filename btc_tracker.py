@@ -39,9 +39,10 @@ if uploaded_file is not None:
     btc_df['fast_close'] = btc_df['Close'].ewm(halflife=short_window).mean()
     btc_df['slow_close'] = btc_df['Close'].ewm(halflife=long_window).mean()
     # Construct a crossover trading signal
-    btc_df['crossover_long'] = np.where(btc_df['fast_close'] > btc_df['slow_close'], 1.0, 0.0)
-    btc_df['crossover_short'] = np.where(btc_df['fast_close'] < btc_df['slow_close'], -1.0, 0.0)
-    btc_df['crossover_signal'] = btc_df['crossover_long'] + btc_df['crossover_short']
+#    btc_df['crossover_long'] = np.where(btc_df['fast_close'] > btc_df['slow_close'], 1.0, 0.0)
+#    btc_df['crossover_short'] = np.where(btc_df['fast_close'] < btc_df['slow_close'], -1.0, 0.0)
+#    btc_df['crossover_signal'] = btc_df['crossover_long'] + btc_df['crossover_short']
+    btc_df['signal'] = np.where(btc_df['fast_close'] > btc_df['slow_close'], btc_df['Close'], 0.0)
     btc_df.head()
     st.write("Set short and long windows")
     btc_df
@@ -53,17 +54,12 @@ if uploaded_file is not None:
                     name='Close'))
     fig.add_trace(go.Scatter(x=btc_df.Timestamp, y=btc_df.fast_close,
                     mode='lines',
-                    name='Fast Close'))
+                    name='SMA = 1'))
     fig.add_trace(go.Scatter(x=btc_df.Timestamp, y=btc_df.slow_close,
                     mode='lines',
-                    name='Slow Close'))
-#    fig.add_trace(go.Scatter(x=btc_df.Timestamp, y=btc_df.crossover_long,
-#                    mode='markers',
-#                    name='Crossover Long'))
-#    fig.add_trace(go.Scatter(x=btc_df.Timestamp, y=btc_df.crossover_short,
-#                    mode='markers',
-#                    name='Crossover short'))
-    fig.add_trace(go.Scatter(x=btc_df.Timestamp, y=btc_df.crossover_signal,
+                    name='SMA = 10'))
+    if btc_df['Close'] > 0
+        fig.add_trace(go.Scatter(x=btc_df.Timestamp, btc_df['Close'],
                     mode='markers',
                     name='Crossover signal'))
      
