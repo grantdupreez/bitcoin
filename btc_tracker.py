@@ -42,7 +42,7 @@ if uploaded_file is not None:
 #    btc_df['crossover_long'] = np.where(btc_df['fast_close'] > btc_df['slow_close'], 1.0, 0.0)
 #    btc_df['crossover_short'] = np.where(btc_df['fast_close'] < btc_df['slow_close'], -1.0, 0.0)
 #    btc_df['crossover_signal'] = btc_df['crossover_long'] + btc_df['crossover_short']
-    btc_df['signal'] = np.where(btc_df['fast_close'] > btc_df['slow_close'], btc_df['Close'], 0.0)
+    btc_df['signal'] = np.where(btc_df['fast_close'] > btc_df['slow_close'], btc_df['Close'], None)
     btc_df.head()
     st.write("Set short and long windows")
     btc_df
@@ -58,7 +58,7 @@ if uploaded_file is not None:
     fig.add_trace(go.Scatter(x=btc_df.Timestamp, y=btc_df.slow_close,
                     mode='lines',
                     name='SMA = 10'))
-    if btc_df['signal'] > 0:
+    if btc_df['signal']:
         fig.add_trace(go.Scatter(x=btc_df.Timestamp, y=btc_df['Close'],
                     mode='markers',
                     name='Signal'))
