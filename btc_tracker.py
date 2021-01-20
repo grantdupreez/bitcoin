@@ -8,6 +8,7 @@ import warnings
 from datetime import datetime
 from datetime import timedelta
 import yfinance as yf
+import lxml as xml
 
 st.title("Bitcoin Market Analysis")
 
