@@ -20,7 +20,7 @@ Bitcoin = 'BTC-USD'
 BTC_Data = yf.Ticker(Bitcoin)
 st.write(BTC_Data)
 
-y_df = BTC_Data.history(period="max")
+y_df = BTC_Data.history(start="2019-06-01")
 y_df = y_df.reset_index()
 for i in ['Open', 'High', 'Close', 'Low']: 
       y_df[i]  =  y_df[i].astype('float64')
