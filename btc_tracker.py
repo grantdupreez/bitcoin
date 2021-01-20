@@ -15,7 +15,7 @@ Bitcoin = 'BTC-USD'
 BTC_Data = yf.Ticker(Bitcoin)
 
 today = datetime.today()
-st_date = today - timedelta(days=30)
+st_date = today - timedelta(days=60)
 start_date = st.sidebar.date_input("Start Date", st_date)
 
 y_df = BTC_Data.history(start=start_date)
@@ -56,10 +56,10 @@ btc_df['slow_close'] = btc_df['Close'].ewm(halflife=long_window).mean()
 #    btc_df['crossover_signal'] = btc_df['crossover_long'] + btc_df['crossover_short']
 btc_df['signal'] = np.where(btc_df['fast_close'] > btc_df['slow_close'], btc_df['Close'], None)
 btc_df.head()
-st.write("Set short and long windows")
+#st.write("Set short and long windows")
 #btc_df
 
-st.write("EMA of Closing prices")
+st.write("Exponential Moving Average (EMA) of Closing prices")
 fig = go.Figure()
 fig.add_trace(go.Scatter(x=btc_df.Date, y=btc_df['Close'],
             mode='lines',
@@ -78,7 +78,7 @@ if btc_df['signal'] is not None:
 fig
 
 st.write("EMA of Daily Return Volatility")
-st.write("Exponential moving average (EMA) of the closing prices represents a moving average with more weight on the most recent of prices")
+st.write("EMA of the closing prices represents a moving average with more weight on the most recent of prices")
 fig = go.Figure()
 fig.add_trace(go.Scatter(x=btc_df.Date, y=btc_df['slow_close'],
             mode='lines',
@@ -123,9 +123,9 @@ fig = go.Figure(data=[go.Candlestick(x=btc_df['Date'],
 #                    name='Signal'))
 fig
 
-#st.write("Volume")
-#fig = px.histogram(btc_df, x="Date", y="Volume")
-#fig
+st.write("Volume")
+fig = px.histogram(btc_df, x="Date", y="Volume")
+fig
 
 #st.write("Market Cap")
 #fig = px.histogram(btc_df, x="Date", y="Market_Cap")
