@@ -109,7 +109,8 @@ if uploaded_file is not None:
                       go.Scatter(x=btc_df.Timestamp, y=btc_df.bollinger_upper_band, line=dict(color='red', width=1), name='Upper'),
                       go.Scatter(x=btc_df.Timestamp, y=btc_df.bollinger_lower_band, line=dict(color='blue', width=1), name='Lower'),
                 ])
-        fig.add_trace(go.Scatter(x=btc_df.Timestamp, y=btc_df.crossover_signal,
+    
+    fig.add_trace(go.Scatter(x=btc_df.Timestamp, y=btc_df.crossover_signal,
                     mode='markers',
                     name='Crossover signal'))
     fig
