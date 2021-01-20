@@ -21,7 +21,7 @@ st_date = today - timedelta(days=60)
 start_date = st.sidebar.date_input("Start Date", st_date)
 
 y_df = BTC_Data.history(start=start_date)
-st.write("Market capitalisation: " + str(money(BTC_Data.info["marketCap"], 'USD')))
+st.write("Market capitalisation: " + str(Money(BTC_Data.info["marketCap"], 'USD')))
 
 y_df = y_df.reset_index()
 for i in ['Open', 'High', 'Close', 'Low']: 
