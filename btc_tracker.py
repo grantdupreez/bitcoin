@@ -15,7 +15,7 @@ BTC_Data = yf.Ticker(Bitcoin)
 st.write(BTC_Data)
 
 today = datetime.today()
-start_date = st.sidebar.text_input("Start Date", '2020-10-01')
+start_date = st.sidebar.date_input("Start Date", '2020-10-01')
 #end_date = st.sidebar.text_input("End Date", f'{today}')
 
 #y_df = BTC_Data.history(start=start_date, end=end_date)
