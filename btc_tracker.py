@@ -121,9 +121,8 @@ fig = go.Figure(data=[go.Candlestick(x=btc_df['Date'],
               go.Scatter(x=btc_df.Date, y=btc_df.bollinger_lower_band, line=dict(color='blue', width=1), name='Lower'),
         ])
 
-#    fig.add_trace(go.Scatter(x=btc_df.Date, y=btc_df.signal,
-#                    mode='markers',
-#                    name='Signal'))
+    fig.add_trace(go.bar(x=btc_df.Date, y=btc_df.volume,
+                    name='Volume'))
 fig
 
 st.write("Volume")
