@@ -120,7 +120,6 @@ fig = go.Figure(data=[go.Candlestick(x=btc_df['Date'],
               go.Scatter(x=btc_df.Date, y=btc_df.bollinger_upper_band, line=dict(color='red', width=1), name='Upper'),
               go.Scatter(x=btc_df.Date, y=btc_df.bollinger_lower_band, line=dict(color='blue', width=1), name='Lower'),
               go.Scatter(x=btc_df.Date", y=btc_df.Volume)
-        
         ])
 
 fig
