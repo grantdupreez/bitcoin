@@ -12,8 +12,7 @@ from money import Money
 
 st.title("Bitcoin Daily Analysis")
 
-#bc = 'BTC-GBP'
-bc = 'net'
+bc = 'BTC-GBP'
 
 y_data = yf.Ticker(bc)
 
