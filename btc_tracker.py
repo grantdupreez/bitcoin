@@ -13,8 +13,8 @@ from money import Money
 
 st.title("Bitcoin Market Analysis")
 
-Bitcoin = 'BTC-GBP'
-BTC_Data = yf.Ticker(Bitcoin)
+#Bitcoin = 'BTC-GBP'
+#BTC_Data = yf.Ticker(Bitcoin)
 
 today = datetime.today()
 st_date = today - timedelta(days=60)
@@ -23,7 +23,8 @@ to_date = f'{datetime.now():%Y-%m-%d}'
 
 #y_df = BTC_Data.history(start=start_date, end=to_date, interval="1d")
 #y_df = BTC_Data.history(period="max")
-y_df = BTC_Data.download(Bitcoin, start=start_date, end=to_date, interval="1d")
+
+y_df = yf.download("BTC-GBP", start=start_date, end=to_date, interval="1d")
 
 
 st.write("Market capitalisation: " + str(Money(BTC_Data.info["marketCap"], 'GBP')))
