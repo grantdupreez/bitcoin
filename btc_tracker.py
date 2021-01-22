@@ -28,7 +28,7 @@ to_date = f'{datetime.now():%Y-%m-%d}'
 #y_df = yf.download("BTC-GBP", start=start_date, end=to_date, interval="1d")
 
 yf.pdr_override() 
-data = pdr.get_data_yahoo("BTC-GBP", start=start_date, end=to_date, interval="1d")
+y_df = pdr.get_data_yahoo("BTC-GBP", start=start_date, end=to_date, interval="1d")
 
 st.write("Raw")
 
