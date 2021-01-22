@@ -37,7 +37,7 @@ btc_df
 
 
 
-fig = go.Figure(data=[go.Candlestick(x=btc_df['Date'],
+fig = go.Figure(data=[go.Candlestick(x=btc_df['Datetime'],
             open=btc_df['Open'],
             high=btc_df['High'],
             low=btc_df['Low'],
