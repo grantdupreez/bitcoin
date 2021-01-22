@@ -3,6 +3,7 @@ import pandas as pd
 import streamlit as st
 import numpy as np
 import plotly.graph_objects as go
+import plotly.express as px
 import warnings
 from datetime import datetime
 from datetime import timedelta
@@ -53,4 +54,8 @@ fig = go.Figure(data=[go.Candlestick(x=btc_df['Datetime'],
 if select_signals:
       fig.add_trace(go.Scatter(x=btc_df.Datetime, y=btc_df.bollinger_signal, mode='markers', line=dict(color='black', width=1), name='Signal'))
 
+fig
+
+st.write("Volume")
+fig = px.bar(btc_df, x="Datetime", y="Volume")
 fig
