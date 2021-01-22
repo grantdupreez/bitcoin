@@ -37,7 +37,5 @@ btc_df.head()
 # Drop NAs and calculate daily percent return
 btc_df['daily_return'] = btc_df['Close'].dropna().pct_change()
 
-signals_df = btc_df.drop(columns=['Open', 'High', 'Low', 'Volume','Dividends', 'Stock Splits'])
-
 signals_df
 
