@@ -39,3 +39,4 @@ btc_df['daily_return'] = btc_df['Close'].dropna().pct_change()
 
 btc_df
 
+btc_df.hvplot()
