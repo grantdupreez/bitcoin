@@ -24,18 +24,9 @@ btc_df = btc_df.reset_index()
 for i in ['Open', 'High', 'Close', 'Low']: 
       btc_df[i]  =  btc_df[i].astype('float64')
 
-warnings.filterwarnings('ignore')
-
-# Set index as datetime object and drop columns
-#btc_df.set_index(pd.to_datetime(btc_df['Date'], infer_datetime_format=True), inplace=True)
-#btc_df.head()
-
-# Drop NAs and calculate daily percent return
-#btc_df['daily_return'] = btc_df['Close'].dropna().pct_change()
+#warnings.filterwarnings('ignore')
 
 btc_df
-
-
 
 fig = go.Figure(data=[go.Candlestick(x=btc_df['Datetime'],
             open=btc_df['Open'],
