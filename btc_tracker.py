@@ -10,6 +10,7 @@ from datetime import timedelta
 import yfinance as yf
 import lxml as xml
 from money import Money
+from pandas_datareader import data as pdr
 
 st.title("Bitcoin Market Analysis")
 
@@ -24,9 +25,14 @@ to_date = f'{datetime.now():%Y-%m-%d}'
 #y_df = BTC_Data.history(start=start_date, end=to_date, interval="1d")
 #y_df = BTC_Data.history(period="max")
 
-y_df = yf.download("BTC-GBP", start=start_date, end=to_date, interval="1d")
+#y_df = yf.download("BTC-GBP", start=start_date, end=to_date, interval="1d")
 
-print(y_df)
+yf.pdr_override() 
+data = pdr.get_data_yahoo("BTC-GBP", start=start_date, end=to_date, interval="1d")
+
+st.write("Raw")
+
+st.write(y_df)
 
 
 #st.write("Market capitalisation: " + str(Money(BTC_Data.info["marketCap"], 'GBP')))
