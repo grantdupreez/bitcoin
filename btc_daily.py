@@ -20,7 +20,7 @@ st_date = today - timedelta(days=1)
 start_date = st.sidebar.date_input("Start Date", st_date)
 to_date = f'{datetime.now():%Y-%m-%d}'
 
-btc_df = y_data.download(bc, start=start_date, end=to_date, interval="1d")
+btc_df = y_data.history(bc, start=start_date, end=to_date, interval="1d")
 
 
 btc_df = btc_df.reset_index()
