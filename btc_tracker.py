@@ -15,15 +15,16 @@ st.title("Bitcoin Market Analysis")
 
 Bitcoin = 'BTC-GBP'
 BTC_Data = yf.Ticker(Bitcoin)
-###data = yf.download("SPY AAPL", start="2017-01-01", end="2017-04-30")
 
 today = datetime.today()
 st_date = today - timedelta(days=60)
 start_date = st.sidebar.date_input("Start Date", st_date)
 to_date = f'{datetime.now():%Y-%m-%d}'
 
-y_df = BTC_Data.history(start=start_date, end=to_date, interval="1d")
+#y_df = BTC_Data.history(start=start_date, end=to_date, interval="1d")
 #y_df = BTC_Data.history(period="max")
+y_df = BTC_Data.download(Bitcoin, start=start_date, end=to_date, interval="1d")
+
 
 st.write("Market capitalisation: " + str(Money(BTC_Data.info["marketCap"], 'GBP')))
 
