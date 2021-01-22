@@ -13,7 +13,7 @@ from money import Money
 
 st.title("Bitcoin Market Analysis")
 
-Bitcoin = 'BTC-USD'
+Bitcoin = 'BTC-GBP'
 BTC_Data = yf.Ticker(Bitcoin)
 
 today = datetime.today()
