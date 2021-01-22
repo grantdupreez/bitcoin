@@ -27,7 +27,8 @@ to_date = f'{datetime.now():%Y-%m-%d}'
 y_df = yf.download("BTC-GBP", start=start_date, end=to_date, interval="1d")
 
 
-st.write("Market capitalisation: " + str(Money(BTC_Data.info["marketCap"], 'GBP')))
+#st.write("Market capitalisation: " + str(Money(BTC_Data.info["marketCap"], 'GBP')))
+st.write("Market capitalisation: " + str(Money(y_df.info["marketCap"], 'GBP')))
 
 y_df = y_df.reset_index()
 for i in ['Open', 'High', 'Close', 'Low']: 
