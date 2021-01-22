@@ -14,8 +14,7 @@ st.title("Bitcoin Daily Analysis")
 
 bc = 'BTC-GBP'
 
-period = st.sidebar.selectbox(
-    'What period?'('1d', '5d', '1mo')
+period = st.sidebar.selectbox('What period?'('1d', '5d', '1mo'))
 
 btc_df = yf.download(tickers=bc, period=period, interval="1h")
 
