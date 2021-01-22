@@ -17,7 +17,7 @@ bc = 'BTC-GBP'
 y_data = yf.Ticker(bc)
 
 today = datetime.today()
-st_date = today - timedelta(days=1)
+st_date = today - timedelta(days=60)
 start_date = st.sidebar.date_input("Start Date", st_date)
 to_date = f'{datetime.now():%Y-%m-%d}'
 
