@@ -42,7 +42,7 @@ fig = go.Figure(data=[go.Candlestick(x=btc_df['Datetime'],
             high=btc_df['High'],
             low=btc_df['Low'],
             close=btc_df['Close']), 
-              go.Scatter(x=btc_df.Date, y=btc_df.Close, line=dict(color='orange', width=1), name='Close')
+              go.Scatter(x=btc_df.Datetime, y=btc_df.Close, line=dict(color='orange', width=1), name='Close')
         ])
 
-#fig
+fig
