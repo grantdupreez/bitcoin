@@ -12,17 +12,16 @@ from money import Money
 
 st.title("Bitcoin Daily Analysis")
 
-#bc = 'BTC-GBP'
-bc = 'AAPL'
+bc = 'BTC-GBP'
 
 y_data = yf.Ticker(bc)
 
 today = datetime.today()
-st_date = today - timedelta(days=60)
+st_date = today - timedelta(days=1)
 start_date = st.sidebar.date_input("Start Date", st_date)
 to_date = f'{datetime.now():%Y-%m-%d}'
 
-btc_df = y_data.history(bc, start=start_date, end=to_date, interval="1d")
+btc_df = y_data.history(bc, start=start_date, end=to_date, interval="1h")
 
 
 btc_df = btc_df.reset_index()
