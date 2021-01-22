@@ -16,7 +16,7 @@ bc = 'BTC-GBP'
 
 select_period = st.sidebar.selectbox('What period?', ('1d','5d','1mo'))
 select_interval = st.sidebar.selectbox('What interval?', ('1m','2m','5m','15m','30m','60m','90m','1h'))
-
+select_signals = st.sidebar.checkbox('Signals?')
 
 btc_df = yf.download(tickers=bc, period=select_period, interval=select_interval)
 
@@ -50,5 +50,7 @@ fig = go.Figure(data=[go.Candlestick(x=btc_df['Datetime'],
               go.Scatter(x=btc_df.Datetime, y=btc_df.bollinger_signal, mode='markers', line=dict(color='black', width=1), name='Signal')
                      
                      ])
+if select_signals:
+      fig.add_trace(go.Scatter(x=btc_df.Datetime, y=btc_df.bollinger_signal, mode='markers', line=dict(color='black', width=1), name='Signal'))
 
 fig
