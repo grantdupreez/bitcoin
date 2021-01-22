@@ -2,54 +2,29 @@
 import pandas as pd
 import streamlit as st
 import numpy as np
-import plotly.graph_objects as go
-import plotly.express as px
+import hvplot.pandas
 import warnings
 from datetime import datetime
-from datetime import timedelta
 import yfinance as yf
 import lxml as xml
 from money import Money
-from pandas_datareader import data as pdr
 
-st.title("Bitcoin Market Analysis")
+st.title("Bitcoin Daily Analysis")
 
-#Bitcoin = 'BTC-GBP'
-#BTC_Data = yf.Ticker(Bitcoin)
+bc = 'BTC-GBP'
+y_data = yf.Ticker(Bitcoin)
 
 today = datetime.today()
-st_date = today - timedelta(days=60)
+st_date = today - timedelta(days=1)
 start_date = st.sidebar.date_input("Start Date", st_date)
 to_date = f'{datetime.now():%Y-%m-%d}'
 
-#y_df = BTC_Data.history(start=start_date, end=to_date, interval="1d")
-#y_df = BTC_Data.history(period="max")
-
-#y_df = yf.download("BTC-GBP", start=start_date, end=to_date, interval="1d")
-
-yf.pdr_override() 
-y_df = pdr.get_data_yahoo("BTC-GBP", start=start_date, end=to_date, interval="1d")
-
-st.write("Raw")
-
-st.write(y_df)
+btc_df = y_data.download(bc, start=start_date, end=to_date, interval="1d")
 
 
-#st.write("Market capitalisation: " + str(Money(BTC_Data.info["marketCap"], 'GBP')))
-###st.write("Market capitalisation: " + str(Money(y_df.info["marketCap"], 'GBP')))
-
-y_df = y_df.reset_index()
+btc_df = btc_df.reset_index()
 for i in ['Open', 'High', 'Close', 'Low']: 
-      y_df[i]  =  y_df[i].astype('float64')
-st.write(y_df)
-
-# optional replacement with an upload
-#uploaded_file = st.sidebar.file_uploader("Choose a file",type=['CSV'])
-#if uploaded_file is not None:
-#    btc_df = pd.read_csv(uploaded_file, header=[0])
-#    btc_df.head()
-
-btc_df = y_df
+      btc_df[i]  =  btc_df[i].astype('float64')
 
 warnings.filterwarnings('ignore')
 
@@ -61,84 +36,55 @@ btc_df.head()
 btc_df['daily_return'] = btc_df['Close'].dropna().pct_change()
 #btc_df
 
-# Set short and long windows
-short_window = 1
-long_window = 10
-st.write("Short window set to: 1 / Long window set to: 10")
-# Construct a `Fast` and `Slow` Exponential Moving Average from short and long windows, respectively
-btc_df['fast_close'] = btc_df['Close'].ewm(halflife=short_window).mean()
-btc_df['slow_close'] = btc_df['Close'].ewm(halflife=long_window).mean()
-# Construct a crossover trading signal
-#    btc_df['crossover_long'] = np.where(btc_df['fast_close'] > btc_df['slow_close'], 1.0, 0.0)
-#    btc_df['crossover_short'] = np.where(btc_df['fast_close'] < btc_df['slow_close'], -1.0, 0.0)
-#    btc_df['crossover_signal'] = btc_df['crossover_long'] + btc_df['crossover_short']
-btc_df['signal'] = np.where(btc_df['fast_close'] > btc_df['slow_close'], btc_df['Close'], None)
-btc_df.head()
-#st.write("Set short and long windows")
-#btc_df
+signals_df = btc_df.drop(columns=['Open', 'High', 'Low', 'Volume','Dividends', 'Stock Splits'])
 
-st.write("Exponential Moving Average (EMA) of Closing prices")
-fig = go.Figure()
-fig.add_trace(go.Scatter(x=btc_df.Date, y=btc_df['Close'],
-            mode='lines',
-            name='Close'))
-fig.add_trace(go.Scatter(x=btc_df.Date, y=btc_df.fast_close,
-            mode='lines',
-            name='SMA = 1'))
-fig.add_trace(go.Scatter(x=btc_df.Date, y=btc_df.slow_close,
-            mode='lines',
-            name='SMA = 10'))
-if btc_df['signal'] is not None:
-      fig.add_trace(go.Scatter(x=btc_df.Date, y=btc_df['Close'],
-            mode='markers',
-            name='Signal'))
+# Set the short window and long windows
+short_window = 50
+long_window = 100
+# Generate the short and long moving averages (50 and 100 days, respectively)
+signals_df['SMA50'] = signals_df['Close'].rolling(window=short_window).mean()
+signals_df['SMA100'] = signals_df['Close'].rolling(window=long_window).mean()
+signals_df['Signal'] = 0.0
+# Generate the trading signal 0 or 1,
+# where 0 is when the SMA50 is under the SMA100, and
+# where 1 is when the SMA50 is higher (or crosses over) the SMA100
+signals_df['Signal'][short_window:] = np.where(
+    signals_df['SMA50'][short_window:] > signals_df['SMA100'][short_window:], 1.0, 0.0
+)
+# Calculate the points in time at which a position should be taken, 1 or -1
+signals_df['Entry/Exit'] = signals_df['Signal'].diff()
+# Print the DataFrame
+signals_df.tail(10)
 
-fig
-
-st.write("EMA of Daily Return Volatility")
-st.write("EMA of the closing prices represents a moving average with more weight on the most recent of prices")
-fig = go.Figure()
-fig.add_trace(go.Scatter(x=btc_df.Date, y=btc_df['slow_close'],
-            mode='lines',
-            name='Slow Close'))
-fig.add_trace(go.Scatter(x=btc_df.Date, y=btc_df.fast_close,
-            mode='lines',
-            name='Fast Close'))
-fig
-
-
-# Set bollinger band window
-bollinger_window = 20
-# Calculate rolling mean and standard deviation
-btc_df['bollinger_mid_band'] = btc_df['Close'].rolling(window=bollinger_window).mean()
-btc_df['bollinger_std'] = btc_df['Close'].rolling(window=20).std()
-# Calculate upper and lowers bands of bollinger band
-btc_df['bollinger_upper_band']  = btc_df['bollinger_mid_band'] + (btc_df['bollinger_std'] * 1)
-btc_df['bollinger_lower_band']  = btc_df['bollinger_mid_band'] - (btc_df['bollinger_std'] * 1)
-# Calculate bollinger band trading signal
-btc_df['bollinger_long'] = np.where(btc_df['Close'] < btc_df['bollinger_lower_band'], 1.0, 0.0)
-btc_df['bollinger_short'] = np.where(btc_df['Close'] > btc_df['bollinger_upper_band'], -1.0, 0.0)
-btc_df['bollinger_signal'] = btc_df['bollinger_long'] + btc_df['bollinger_short']
-st.write("Set bollinger band window - window: 20")
-#btc_df
-
-# Plot 
-st.write("Bollinger Bands")
-
-fig = go.Figure(data=[go.Candlestick(x=btc_df['Date'],
-            open=btc_df['Open'],
-            high=btc_df['High'],
-            low=btc_df['Low'],
-            close=btc_df['Close']), 
-              go.Scatter(x=btc_df.Date, y=btc_df.Close, line=dict(color='orange', width=1), name='Close'),
-              go.Scatter(x=btc_df.Date, y=btc_df.bollinger_mid_band, line=dict(color='green', width=1), name='Mid'),
-              go.Scatter(x=btc_df.Date, y=btc_df.bollinger_upper_band, line=dict(color='red', width=1), name='Upper'),
-              go.Scatter(x=btc_df.Date, y=btc_df.bollinger_lower_band, line=dict(color='blue', width=1), name='Lower'),
-#              go.bar(x=btc_df.Date, y=btc_df.Volume)
-        ])
-
-fig
-
-st.write("Volume")
-fig = px.bar(btc_df, x="Date", y="Volume")
-fig
+# Visualize exit position relative to close price
+exit = signals_df[signals_df['Entry/Exit'] == -1.0]['Close'].hvplot.scatter(
+    color='red',
+    legend=False,
+    ylabel='Price in $',
+    width=1000,
+    height=400
+)
+# Visualize entry position relative to close price
+entry = signals_df[signals_df['Entry/Exit'] == 1.0]['Close'].hvplot.scatter(
+    color='green',
+    legend=False,
+    ylabel='Price in $',
+    width=1000,
+    height=400
+)
+# Visualize close price for the investment
+security_close = signals_df[['Close']].hvplot(
+    line_color='lightgray',
+    ylabel='Price in $',
+    width=1000,
+    height=400
+)
+# Visualize moving averages
+moving_avgs = signals_df[['SMA50', 'SMA100']].hvplot(
+    ylabel='Price in $',
+    width=1000,
+    height=400
+)
+# Overlay plots
+entry_exit_plot = security_close * moving_avgs * entry * exit
+entry_exit_plot.opts(xaxis=None)
