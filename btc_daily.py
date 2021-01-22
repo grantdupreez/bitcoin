@@ -12,7 +12,9 @@ from money import Money
 
 st.title("Bitcoin Daily Analysis")
 
-bc = 'BTC-GBP'
+#bc = 'BTC-GBP'
+bc = 'AAPL'
+
 y_data = yf.Ticker(bc)
 
 today = datetime.today()
