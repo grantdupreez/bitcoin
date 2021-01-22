@@ -31,11 +31,11 @@ for i in ['Open', 'High', 'Close', 'Low']:
 warnings.filterwarnings('ignore')
 
 # Set index as datetime object and drop columns
-btc_df.set_index(pd.to_datetime(btc_df['Date'], infer_datetime_format=True), inplace=True)
-btc_df.head()
+#btc_df.set_index(pd.to_datetime(btc_df['Date'], infer_datetime_format=True), inplace=True)
+#btc_df.head()
 
 # Drop NAs and calculate daily percent return
-btc_df['daily_return'] = btc_df['Close'].dropna().pct_change()
+#btc_df['daily_return'] = btc_df['Close'].dropna().pct_change()
 
 btc_df
 
