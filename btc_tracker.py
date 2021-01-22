@@ -19,8 +19,9 @@ BTC_Data = yf.Ticker(Bitcoin)
 today = datetime.today()
 st_date = today - timedelta(days=60)
 start_date = st.sidebar.date_input("Start Date", st_date)
+to_date = str(dt.date.today())
 
-y_df = BTC_Data.history(start=start_date)
+y_df = BTC_Data.history(start=start_date, end=to_date, interval="1h")
 st.write("Market capitalisation: " + str(Money(BTC_Data.info["marketCap"], 'USD')))
 
 y_df = y_df.reset_index()
