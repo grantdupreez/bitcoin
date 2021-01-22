@@ -26,6 +26,8 @@ to_date = f'{datetime.now():%Y-%m-%d}'
 
 y_df = yf.download("BTC-GBP", start=start_date, end=to_date, interval="1d")
 
+print(y_df)
+
 
 #st.write("Market capitalisation: " + str(Money(BTC_Data.info["marketCap"], 'GBP')))
 ###st.write("Market capitalisation: " + str(Money(y_df.info["marketCap"], 'GBP')))
