@@ -14,10 +14,10 @@ st.title("Bitcoin Daily Analysis")
 
 bc = 'BTC-GBP'
 
-select_period = st.sidebar.selectbox('Select period?', ('1d','5d','1mo'))
+select_period = st.sidebar.selectbox('Select period?', ('1d','5d','10d'))
 select_interval = st.sidebar.selectbox('Select interval?', ('1m','2m','5m','15m','30m','60m','90m'))
-select_signals = st.sidebar.checkbox('Signals?')
 select_window = st.sidebar.slider('Window', min_value=1, max_value=50, value=10, step=1)
+select_signals = st.sidebar.checkbox('Signals?')
 
 btc_df = yf.download(tickers=bc, period=select_period, interval=select_interval)
 
