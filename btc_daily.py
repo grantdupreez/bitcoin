@@ -5,6 +5,7 @@ import numpy as np
 import hvplot.pandas
 import warnings
 from datetime import datetime
+from datetime import datedelta
 import yfinance as yf
 import lxml as xml
 from money import Money
