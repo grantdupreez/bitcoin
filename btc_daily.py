@@ -12,7 +12,7 @@ from money import Money
 st.title("Bitcoin Daily Analysis")
 
 bc = 'BTC-GBP'
-y_data = yf.Ticker(Bitcoin)
+y_data = yf.Ticker(bc)
 
 today = datetime.today()
 st_date = today - timedelta(days=1)
