@@ -39,7 +39,9 @@ btc_df['bollinger_signal'] = np.where(btc_df['bollinger_long'] + btc_df['bolling
 
 st.write("Set bollinger band window - window:" + str(select_window))
 
-btc_df
+#btc_df
+
+st.write("Market capitalisation: " + str(Money(btc_df.info["marketCap"], 'GBP')))
 
 fig = go.Figure(data=[go.Candlestick(x=btc_df['Datetime'],
             open=btc_df['Open'],
@@ -58,3 +60,5 @@ fig
 
 fig = px.bar(btc_df, x="Datetime", y="Volume")
 fig
+
+btc_df
