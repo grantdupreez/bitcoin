@@ -52,7 +52,7 @@ fig = go.Figure(data=[go.Candlestick(x=btc_df['Datetime'],
               go.Scatter(x=btc_df.Datetime, y=btc_df.bollinger_lower_band, line=dict(color='blue', width=1), name='Lower')
                      ])
 if select_signals:
-      fig.add_trace(go.Scatter(x=btc_df.Datetime, y=btc_df.bollinger_signal, mode='markers', line=dict(color='grey', width=1), name='Signal'))
+      fig.add_trace(go.Scatter(x=btc_df.Datetime, y=btc_df.bollinger_signal, mode='markers', line=dict(color='black', width=1), name='Signal'))
 
 fig
 
