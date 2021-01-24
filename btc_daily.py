@@ -41,7 +41,7 @@ st.write("Set bollinger band window - window:" + str(select_window))
 
 #btc_df
 
-st.write("Market capitalisation: " + str(Money(btc_df.info["marketCap"], 'GBP')))
+st.write("Market capitalisation: " + str(Money(yf.info["marketCap"], 'GBP')))
 
 fig = go.Figure(data=[go.Candlestick(x=btc_df['Datetime'],
             open=btc_df['Open'],
