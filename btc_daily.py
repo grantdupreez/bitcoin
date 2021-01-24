@@ -39,6 +39,7 @@ mc = yf.Ticker(select_currency)
 cur = select_currency
 cur = cur[-3:]
 st.write("Market capitalisation: " + str(Money(mc.info["marketCap"], cur)))
+st.write("Bollinger band window:" + str(select_window))
 
 fig = go.Figure(data=[go.Candlestick(x=btc_df['Datetime'],
             open=btc_df['Open'],
@@ -55,7 +56,6 @@ if select_signals:
 
 fig
 
-st.write("Bollinger band window:" + str(select_window))
 
 fig = px.bar(btc_df, x="Datetime", y="Volume")
 fig
