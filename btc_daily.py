@@ -35,8 +35,6 @@ btc_df['bollinger_short'] = np.where(btc_df['Close'] > btc_df['bollinger_upper_b
 
 btc_df['bollinger_signal'] = np.where(btc_df['bollinger_long'] + btc_df['bollinger_short'] > 0, btc_df['Close'], None)
 
-st.write("Set bollinger band window:" + str(select_window))
-
 mc = yf.Ticker(select_currency)
 cur = select_currency
 cur = cur[-3:]
@@ -56,6 +54,8 @@ if select_signals:
       fig.add_trace(go.Scatter(x=btc_df.Datetime, y=btc_df.bollinger_signal, mode='markers', line=dict(color='black', width=1), name='Signal'))
 
 fig
+
+st.write("Bollinger band window:" + str(select_window))
 
 fig = px.bar(btc_df, x="Datetime", y="Volume")
 fig
