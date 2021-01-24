@@ -13,8 +13,6 @@ from money import Money
 
 st.title("Bitcoin Daily Analysis")
 
-#bc = 'BTC-GBP'
-
 select_currency = st.sidebar.selectbox('Select currency?', ('BTC-GBP','BTC-USD'))
 select_period = st.sidebar.selectbox('Select period?', ('1d','5d','10d'))
 select_interval = st.sidebar.selectbox('Select interval?', ('1m','2m','5m','15m','30m','60m','90m'))
@@ -37,7 +35,7 @@ btc_df['bollinger_short'] = np.where(btc_df['Close'] > btc_df['bollinger_upper_b
 
 btc_df['bollinger_signal'] = np.where(btc_df['bollinger_long'] + btc_df['bollinger_short'] > 0, btc_df['Close'], None)
 
-st.write("Set bollinger band window - window:" + str(select_window))
+st.write("Set bollinger band window:" + str(select_window))
 
 mc = yf.Ticker(select_currency)
 cur = select_currency
