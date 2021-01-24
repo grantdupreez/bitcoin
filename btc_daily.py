@@ -56,6 +56,5 @@ if select_signals:
 
 fig
 
-st.write("Volume")
 fig = px.bar(btc_df, x="Datetime", y="Volume")
 fig
