@@ -17,7 +17,7 @@ select_currency = st.sidebar.selectbox('Select currency?', ('BTC-GBP','BTC-USD')
 select_period = st.sidebar.selectbox('Select period?', ('1d','5d','10d'))
 select_interval = st.sidebar.selectbox('Select interval?', ('1m','2m','5m','15m','30m','60m','90m'))
 select_window = st.sidebar.slider('Window', min_value=1, max_value=50, value=10, step=1)
-select_signals = st.sidebar.checkbox('Signals?')
+select_signals = st.sidebar.checkbox('Show signals?')
 
 btc_df = yf.download(tickers=select_currency, period=select_period, interval=select_interval)
 
@@ -52,7 +52,8 @@ fig = go.Figure(data=[go.Candlestick(x=btc_df['Datetime'],
               go.Scatter(x=btc_df.Datetime, y=btc_df.bollinger_lower_band, line=dict(color='blue', width=1), name='Lower')
                      ])
 if select_signals:
-      fig.add_trace(go.Scatter(x=btc_df.Datetime, y=btc_df.bollinger_signal, mode='markers', line=dict(color='black', width=1), name='Signal'))
+#      fig.add_trace(go.Scatter(x=btc_df.Datetime, y=btc_df.bollinger_signal, mode='markers', line=dict(color='black', width=1), name='Signal'))
+      fig.add_trace(go.Scatter(x=btc_df.Datetime, y=btc_df.bollinger_signal, mode='markers', line=dict(color='black'), name='Signal'))
 
 fig
 
