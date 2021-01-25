@@ -41,21 +41,24 @@ cur = cur[-3:]
 st.write("Market capitalisation: " + str(Money(mc.info["marketCap"], cur)))
 st.write("Bollinger band window:" + str(select_window))
 
-if ((select_period != '10d') and (select_interval != '1m')):
-      fig = go.Figure(data=[go.Candlestick(x=btc_df['Datetime'],
-                  open=btc_df['Open'],
-                  high=btc_df['High'],
-                  low=btc_df['Low'],
-                  close=btc_df['Close']), 
-                    go.Scatter(x=btc_df.Datetime, y=btc_df.Close, line=dict(color='grey', width=1), name='Close'),
-                    go.Scatter(x=btc_df.Datetime, y=btc_df.bollinger_mid_band, line=dict(color='orange', width=1), name='Mid'),
-                    go.Scatter(x=btc_df.Datetime, y=btc_df.bollinger_upper_band, line=dict(color='red', width=1), name='Upper'),
-                    go.Scatter(x=btc_df.Datetime, y=btc_df.bollinger_lower_band, line=dict(color='blue', width=1), name='Lower')
-                           ])
-      if select_signals:
-            fig.add_trace(go.Scatter(x=btc_df.Datetime, y=btc_df.bollinger_signal, mode='markers', line=dict(color='black', width=1), name='Signal'))
+if select_period != '10d':
+      of select_interval != '1m':
+            fig = go.Figure(data=[go.Candlestick(x=btc_df['Datetime'],
+                        open=btc_df['Open'],
+                        high=btc_df['High'],
+                        low=btc_df['Low'],
+                        close=btc_df['Close']), 
+                          go.Scatter(x=btc_df.Datetime, y=btc_df.Close, line=dict(color='grey', width=1), name='Close'),
+                          go.Scatter(x=btc_df.Datetime, y=btc_df.bollinger_mid_band, line=dict(color='orange', width=1), name='Mid'),
+                          go.Scatter(x=btc_df.Datetime, y=btc_df.bollinger_upper_band, line=dict(color='red', width=1), name='Upper'),
+                          go.Scatter(x=btc_df.Datetime, y=btc_df.bollinger_lower_band, line=dict(color='blue', width=1), name='Lower')
+                                 ])
+            if select_signals:
+                  fig.add_trace(go.Scatter(x=btc_df.Datetime, y=btc_df.bollinger_signal, mode='markers', line=dict(color='black', width=1), name='Signal'))
 
-      fig
+            fig
+      else:
+            st.write("Select a longer interval, too much data for the chart to display")
 else:
       st.write("Select a longer interval, too much data for the chart to display")
 
