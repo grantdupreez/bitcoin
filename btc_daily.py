@@ -14,7 +14,7 @@ from money import Money
 st.title("Bitcoin Daily Analysis")
 
 select_currency = st.sidebar.selectbox('Select currency?', ('BTC-GBP','BTC-USD'))
-select_period = st.sidebar.selectbox('Select period?', ('1d','5d','10d'))
+select_period = st.sidebar.selectbox('Select period?', ('1d','5d','10d','1mo','3mo','6mo','1y' ))
 select_interval = st.sidebar.selectbox('Select interval?', ('1m','2m','5m','15m','30m','60m','90m'))
 select_window = st.sidebar.slider('Set window', min_value=10, max_value=50, value=20, step=5)
 select_signals = st.sidebar.checkbox('Show signals?')
