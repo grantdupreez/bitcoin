@@ -13,14 +13,23 @@ from money import Money
 
 st.title("Bitcoin Daily Analysis")
 
+
 select_currency = st.sidebar.selectbox('Select currency?', ('BTC-GBP','BTC-USD'))
-select_period = st.sidebar.selectbox('Select period?', ('10d','5d','1d'))
+#select_period = st.sidebar.selectbox('Select period?', ('10d','5d','1d'))
 #select_interval = st.sidebar.selectbox('Select interval?', ('90m','60m','30m','15m','5m','2m','1m'))
+
+today = datetime.today()
+st_date = today - timedelta(days=60)
+start_date = st.sidebar.date_input("Start Date", st_date)
+to_date = f'{datetime.now():%Y-%m-%d}'
+
 select_interval = st.sidebar.selectbox('Select interval?', ('90m','60m','30m','15m','5m'))
 select_window = st.sidebar.slider('Set window', min_value=10, max_value=50, value=20, step=5)
 select_signals = st.sidebar.checkbox('Show signals?')
 
-btc_df = yf.download(tickers=select_currency, period=select_period, interval=select_interval)
+#btc_df = yf.download(tickers=select_currency, period=select_period, interval=select_interval)
+btc_df = yf.download(tickers=select_currency, start=start_date, end=to_date, interval=select_interval) 
+
 
 btc_df = btc_df.reset_index()
 for i in ['Open', 'High', 'Close', 'Low']: 
