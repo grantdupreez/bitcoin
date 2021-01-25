@@ -41,7 +41,7 @@ cur = cur[-3:]
 st.write("Market capitalisation: " + str(Money(mc.info["marketCap"], cur)))
 st.write("Bollinger band window:" + str(select_window))
 
-if select_period != '10d' and select_interval != '1m':
+if (select_period != '10d') and (select_interval != '1m'):
       fig = go.Figure(data=[go.Candlestick(x=btc_df['Datetime'],
                   open=btc_df['Open'],
                   high=btc_df['High'],
