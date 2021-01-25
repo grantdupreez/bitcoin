@@ -30,6 +30,9 @@ select_signals = st.sidebar.checkbox('Show signals?')
 #btc_df = yf.download(tickers=select_currency, period=select_period, interval=select_interval)
 btc_df = yf.download(tickers=select_currency, start=start_date, end=to_date, interval=select_interval) 
 
+st.write(to_date)
+st.write(start_date)
+
 btc_df
 
 btc_df = btc_df.reset_index()
