@@ -28,7 +28,7 @@ select_window = st.sidebar.slider('Set window', min_value=10, max_value=50, valu
 select_signals = st.sidebar.checkbox('Show signals?')
 
 #btc_df = yf.download(tickers=select_currency, period=select_period, interval=select_interval)
-btc_df = yf.download(tickers=select_currency, start=start_date, interval=select_interval) 
+btc_df = yf.download(tickers=select_currency, interval=select_interval) 
 
 st.write(to_date)
 st.write(start_date)
