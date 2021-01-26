@@ -13,6 +13,8 @@ from pandas_datareader import data as pdr
 
 st.title("Bitcoin Market Analysis")
 
+selected_ma = st.sidebar.slider('Moving average', min_value=10, max_value=100, value=50, step=10)
+
 uploaded_file = st.sidebar.file_uploader("Choose a file",type=['CSV'])
 if uploaded_file is not None:
     btc_df = pd.read_csv(uploaded_file, header=[0])
@@ -29,9 +31,9 @@ if uploaded_file is not None:
     #btc_df
 
     # Set short and long windows
-    short_window = 1
-    long_window = 10
-    st.write("Short window set to: 1 / Long window set to: 10")
+    short_window = 10
+    long_window = selected_ma
+    st.write("Short window set to: 10 / Long window set to: " + str(selected_ma))
     # Construct a `Fast` and `Slow` Exponential Moving Average from short and long windows, respectively
     btc_df['fast_close'] = btc_df['Close'].ewm(halflife=short_window).mean()
     btc_df['slow_close'] = btc_df['Close'].ewm(halflife=long_window).mean()
@@ -45,10 +47,10 @@ if uploaded_file is not None:
                   name='Close'))
     fig.add_trace(go.Scatter(x=btc_df.Date, y=btc_df.fast_close,
                   mode='lines',
-                  name='SMA = 1'))
+                  name='SMA = 10'))
     fig.add_trace(go.Scatter(x=btc_df.Date, y=btc_df.slow_close,
                   mode='lines',
-                  name='SMA = 10'))
+                  name='SMA = ' + str(selected_ma)))
     if btc_df['signal'] is not None:
             fig.add_trace(go.Scatter(x=btc_df.Date, y=btc_df['Close'],
                   mode='markers',
@@ -69,10 +71,10 @@ if uploaded_file is not None:
 
 
     # Set bollinger band window
-    bollinger_window = 20
+    bollinger_window = selected_ma
     # Calculate rolling mean and standard deviation
     btc_df['bollinger_mid_band'] = btc_df['Close'].rolling(window=bollinger_window).mean()
-    btc_df['bollinger_std'] = btc_df['Close'].rolling(window=20).std()
+    btc_df['bollinger_std'] = btc_df['Close'].rolling(window=selected_ma).std()
     # Calculate upper and lowers bands of bollinger band
     btc_df['bollinger_upper_band']  = btc_df['bollinger_mid_band'] + (btc_df['bollinger_std'] * 1)
     btc_df['bollinger_lower_band']  = btc_df['bollinger_mid_band'] - (btc_df['bollinger_std'] * 1)
@@ -80,7 +82,7 @@ if uploaded_file is not None:
     btc_df['bollinger_long'] = np.where(btc_df['Close'] < btc_df['bollinger_lower_band'], 1.0, 0.0)
     btc_df['bollinger_short'] = np.where(btc_df['Close'] > btc_df['bollinger_upper_band'], -1.0, 0.0)
     btc_df['bollinger_signal'] = btc_df['bollinger_long'] + btc_df['bollinger_short']
-    st.write("Set bollinger band window - window: 20")
+    st.write("Set bollinger band window - window: " + str(selected_ma))
 
     # Plot  
     st.write("Bollinger Bands")
