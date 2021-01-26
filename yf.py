@@ -1,8 +1,16 @@
-import yfinance as yf
-from pandas_datareader import data as pdr
+import requests
+import pandas as pd
+from datetime import datetime
+from dateutil.relativedelta import relativedelta
 
-yf.pdr_override()
-#bc = yf.Ticker("BTC-GBP")
-#df = yf.download("BTC-GBP", start="2017-01-01", end="2021-01-26")
-df = pdr.get_data_yahoo("BTC-GBP", start="2021-01-18", end="2021-01-26")
-df
+def get_date_range(number_of_months:int):
+    now = datetime.now()
+    dt_end = now.strftime("%Y%m%d")
+    dt_start = (now - relativedelta(months=number_of_months)).strftime("%Y%m%d")
+    return f'start={dt_start}&end={dt_end}'
+
+number_of_months = 3
+
+table = pd.read_html(f'https://coinmarketcap.com/currencies/bitcoin/historical-data/?{get_date_range(number_of_months)}')[0]
+table = table[['Date', 'Close**', 'Volume','Market Cap']]
+table
