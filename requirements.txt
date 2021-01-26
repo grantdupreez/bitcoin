@@ -6,4 +6,4 @@ yfinance==0.1.54
 lxml==4.5.1
 money==1.3.0
 pandas-datareader==0.9.0
-hvplot==0.7.0
+html5lib==1.0.1
