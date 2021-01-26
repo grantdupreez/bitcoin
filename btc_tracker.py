@@ -25,7 +25,7 @@ if uploaded_file is not None:
     btc_df.head()
 
     # Drop NAs and calculate daily percent return
-    btc_df['daily_return'] = btc_df['Close'].dropna().pct_change()
+#    btc_df['daily_return'] = btc_df['Close'].dropna().pct_change()
     #btc_df
 
     # Set short and long windows
