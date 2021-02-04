@@ -44,7 +44,7 @@ st.write("Bollinger band window:" + str(select_window))
 
 fig = make_subplots(specs=[[{"secondary_y": True}]])
 
-figg.add_trace(go.Figure(data=[go.Candlestick(x=btc_df['Datetime'],
+fig.add_trace(go.Figure(data=[go.Candlestick(x=btc_df['Datetime'],
             open=btc_df['Open'],
             high=btc_df['High'],
             low=btc_df['Low'],
