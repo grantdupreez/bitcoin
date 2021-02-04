@@ -43,20 +43,11 @@ cur = cur[-3:]
 st.write("Market capitalisation: " + str(Money(mc.info["marketCap"], cur)))
 st.write("Bollinger band window:" + str(select_window))
 
-fig = make_subplots(rows=2, cols=1, shared_xaxes=True, 
-               vertical_spacing=0.03, subplot_titles=('OHLC', 'Volume'), 
-               row_width=[0.2, 0.7])
+#fig = make_subplots(rows=2, cols=1, shared_xaxes=True, 
+#               vertical_spacing=0.03, subplot_titles=('OHLC', 'Volume'), 
+#               row_width=[0.2, 0.7])
+fig = make_subplots(specs=[[{"secondary_y": True}]])
 
-
-"""fig = go.Figure(data=[go.Candlestick(x=btc_df['Datetime'],
-            open=btc_df['Open'],
-            high=btc_df['High'],
-            low=btc_df['Low'],
-            close=btc_df['Close']), 
-              go.Scatter(x=btc_df.Datetime, y=btc_df.bollinger_mid_band, line=dict(color='orange', width=1), name='Mid'),
-              go.Scatter(x=btc_df.Datetime, y=btc_df.bollinger_upper_band, line=dict(color='red', width=1), name='Upper'),
-              go.Scatter(x=btc_df.Datetime, y=btc_df.bollinger_lower_band, line=dict(color='blue', width=1), name='Lower')
-                     ])"""
 fig.add_trace(go.Candlestick(x=btc_df['Datetime'],
             open=btc_df['Open'],
             high=btc_df['High'],
@@ -65,12 +56,13 @@ fig.add_trace(go.Candlestick(x=btc_df['Datetime'],
 #              go.Scatter(x=btc_df.Datetime, y=btc_df.bollinger_mid_band, line=dict(color='orange', width=1), name='Mid'),
 #              go.Scatter(x=btc_df.Datetime, y=btc_df.bollinger_upper_band, line=dict(color='red', width=1), name='Upper'),
 #              go.Scatter(x=btc_df.Datetime, y=btc_df.bollinger_lower_band, line=dict(color='blue', width=1), name='Lower'), 
-            row=1, col=1
+            secondary_y=True
 )
 
-fig.add_trace(go.Bar(x=btc_df.Datetime, y=btc_df.Volume, showlegend=False), row=2, col=1)
+fig.add_trace(go.Bar(x=btc_df.Datetime, y=btc_df.Volume, showlegend=False), secondary_y=False)
 
-fig.update(layout_xaxis_rangeslider_visible=False)
+#fig.update(layout_xaxis_rangeslider_visible=False)
+fig.layout.yaxis2.showgrid=False
 
 if select_bollinger:
       fig.add_trace(go.Scatter(x=btc_df.Datetime, y=btc_df.bollinger_mid_band, line=dict(color='orange', width=1), name='Mid'))
