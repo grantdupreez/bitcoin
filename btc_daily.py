@@ -68,7 +68,7 @@ fig.add_trace(go.Candlestick(x=btc_df['Datetime'],
             row=1, col=1
 )
 
-fig.add_trace(go.Bar(x=btc_df['Datetime'], y=btc_df['Volume'], color='blue', showlegend=True), row=2, col=1)
+fig.add_trace(go.Bar(x=btc_df['Datetime'], y=btc_df['Volume'], line=dict(color='blue', width=1), showlegend=True), row=2, col=1)
 
 fig.update(layout_xaxis_rangeslider_visible=False)
 
