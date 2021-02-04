@@ -47,8 +47,7 @@ fig = make_subplots(go.Figure(data=[go.Candlestick(x=btc_df['Datetime'],
             open=btc_df['Open'],
             high=btc_df['High'],
             low=btc_df['Low'],
-            close=btc_df['Close']),
-            shared_xaxes=True)
+            close=btc_df['Close'])
 
 if select_bollinger:
       fig.add_trace(go.Scatter(x=btc_df.Datetime, y=btc_df.bollinger_mid_band, line=dict(color='orange', width=1), name='Mid'))
