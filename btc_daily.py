@@ -72,6 +72,11 @@ fig.add_trace(go.Bar(x=btc_df['Datetime'], y=btc_df['Volume'], showlegend=False)
 
 fig.update(layout_xaxis_rangeslider_visible=False)
 
+if select_bollinger:
+      fig.add_trace(go.Scatter(x=btc_df.Datetime, y=btc_df.bollinger_mid_band, line=dict(color='orange', width=1), name='Mid'))
+      fig.add_trace(go.Scatter(x=btc_df.Datetime, y=btc_df.bollinger_upper_band, line=dict(color='red', width=1), name='Upper'))
+      fig.add_trace(go.Scatter(x=btc_df.Datetime, y=btc_df.bollinger_lower_band, line=dict(color='blue', width=1), name='Lower'))
+
 if select_signals:
       fig.add_trace(go.Scatter(x=btc_df.Datetime, y=btc_df.bollinger_signal, mode='markers', line=dict(color='black', width=1), name='Signal'))
 
