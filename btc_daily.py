@@ -18,7 +18,6 @@ select_period = st.sidebar.selectbox('Select period?', ('10d','5d','1d'))
 #select_interval = st.sidebar.selectbox('Select interval?', ('90m','60m','30m','15m','5m','2m','1m'))
 select_interval = st.sidebar.selectbox('Select interval?', ('90m','60m','30m','15m','5m'))
 select_window = st.sidebar.slider('Set window', min_value=10, max_value=50, value=20, step=5)
-select_bollinger = st.sidebar.checkbox('Show bollonger bands?')
 select_signals = st.sidebar.checkbox('Show signals?')
 select_close = st.sidebar.checkbox('Show closing tracker?')
 
@@ -43,31 +42,15 @@ cur = cur[-3:]
 st.write("Market capitalisation: " + str(Money(mc.info["marketCap"], cur)))
 st.write("Bollinger band window:" + str(select_window))
 
-#fig = make_subplots(rows=2, cols=1, shared_xaxes=True, 
-#               vertical_spacing=0.03, subplot_titles=('OHLC', 'Volume'), 
-#               row_width=[0.2, 0.7])
-fig = make_subplots(specs=[[{"secondary_y": True}]])
-
-fig.add_trace(go.Candlestick(x=btc_df['Datetime'],
+fig = go.Figure(data=[go.Candlestick(x=btc_df['Datetime'],
             open=btc_df['Open'],
             high=btc_df['High'],
             low=btc_df['Low'],
-            close=btc_df['Close'], name="OHLC"),
-#              go.Scatter(x=btc_df.Datetime, y=btc_df.bollinger_mid_band, line=dict(color='orange', width=1), name='Mid'),
-#              go.Scatter(x=btc_df.Datetime, y=btc_df.bollinger_upper_band, line=dict(color='red', width=1), name='Upper'),
-#              go.Scatter(x=btc_df.Datetime, y=btc_df.bollinger_lower_band, line=dict(color='blue', width=1), name='Lower'), 
-            secondary_y=True
-)
-
-fig.add_trace(go.Bar(x=btc_df.Datetime, y=btc_df.Volume, showlegend=False), secondary_y=False)
-
-#fig.update(layout_xaxis_rangeslider_visible=False)
-fig.layout.yaxis2.showgrid=False
-
-if select_bollinger:
-      fig.add_trace(go.Scatter(x=btc_df.Datetime, y=btc_df.bollinger_mid_band, line=dict(color='orange', width=1), name='Mid'))
-      fig.add_trace(go.Scatter(x=btc_df.Datetime, y=btc_df.bollinger_upper_band, line=dict(color='red', width=1), name='Upper'))
-      fig.add_trace(go.Scatter(x=btc_df.Datetime, y=btc_df.bollinger_lower_band, line=dict(color='blue', width=1), name='Lower'))
+            close=btc_df['Close']), 
+              go.Scatter(x=btc_df.Datetime, y=btc_df.bollinger_mid_band, line=dict(color='orange', width=1), name='Mid'),
+              go.Scatter(x=btc_df.Datetime, y=btc_df.bollinger_upper_band, line=dict(color='red', width=1), name='Upper'),
+              go.Scatter(x=btc_df.Datetime, y=btc_df.bollinger_lower_band, line=dict(color='blue', width=1), name='Lower')
+                     ])
 
 if select_signals:
       fig.add_trace(go.Scatter(x=btc_df.Datetime, y=btc_df.bollinger_signal, mode='markers', line=dict(color='black', width=1), name='Signal'))
@@ -77,10 +60,9 @@ if select_close:
                     
 fig
 
- 
-      
-#fig = px.bar(btc_df, x="Datetime", y="Volume")
+            
+fig = px.bar(btc_df, x="Datetime", y="Volume")
 
-#fig
+fig
 
 btc_df
