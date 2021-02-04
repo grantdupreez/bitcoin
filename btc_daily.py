@@ -3,6 +3,7 @@ import streamlit as st
 import numpy as np
 import plotly.graph_objects as go
 import plotly.express as px
+from plotly.subplots import make_subplots
 import warnings
 from datetime import datetime
 from datetime import timedelta
@@ -41,16 +42,18 @@ cur = cur[-3:]
 st.write("Market capitalisation: " + str(Money(mc.info["marketCap"], cur)))
 st.write("Bollinger band window:" + str(select_window))
 
-fig = go.Figure(data=[go.Candlestick(x=btc_df['Datetime'],
+fig = make_subplots(specs=[[{"secondary_y": True}]])
+
+figg.add_trace(go.Figure(data=[go.Candlestick(x=btc_df['Datetime'],
             open=btc_df['Open'],
             high=btc_df['High'],
             low=btc_df['Low'],
             close=btc_df['Close']), 
-#              go.Scatter(x=btc_df.Datetime, y=btc_df.Close, line=dict(color='grey', width=1), name='Close'),
               go.Scatter(x=btc_df.Datetime, y=btc_df.bollinger_mid_band, line=dict(color='orange', width=1), name='Mid'),
               go.Scatter(x=btc_df.Datetime, y=btc_df.bollinger_upper_band, line=dict(color='red', width=1), name='Upper'),
               go.Scatter(x=btc_df.Datetime, y=btc_df.bollinger_lower_band, line=dict(color='blue', width=1), name='Lower')
-                     ])
+                     ]), 
+               secondary_y=True)
 
 if select_signals:
       fig.add_trace(go.Scatter(x=btc_df.Datetime, y=btc_df.bollinger_signal, mode='markers', line=dict(color='black', width=1), name='Signal'))
@@ -58,10 +61,10 @@ if select_signals:
 if select_close:
       fig.add_trace(go.Scatter(x=btc_df.Datetime, y=btc_df.Close, line=dict(color='grey', width=1), name='Close'))
                     
-fig
+#fig
 
             
-fig = px.bar(btc_df, x="Datetime", y="Volume")
+fig.add_trace(px.bar(btc_df, x="Datetime", y="Volume"))
 
 fig
 
