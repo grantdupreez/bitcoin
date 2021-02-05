@@ -121,12 +121,12 @@ def bbands(price, window_size=10, num_of_std=5):
 
 bb_avg, bb_upper, bb_lower = bbands(btc_df.Close)
 
-fig['data'].append( dict( x=df.index, y=bb_upper, type='scatter', yaxis='y2', 
+fig['data'].append( dict( x=btc_df.index, y=bb_upper, type='scatter', yaxis='y2', 
                          line = dict( width = 1 ),
                          marker=dict(color='#ccc'), hoverinfo='none', 
                          legendgroup='Bollinger Bands', name='Bollinger Bands') )
 
-fig['data'].append( dict( x=df.index, y=bb_lower, type='scatter', yaxis='y2',
+fig['data'].append( dict( x=btc_df.index, y=bb_lower, type='scatter', yaxis='y2',
                          line = dict( width = 1 ),
                          marker=dict(color='#ccc'), hoverinfo='none',
                          legendgroup='Bollinger Bands', showlegend=False ) )
