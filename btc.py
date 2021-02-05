@@ -108,7 +108,7 @@ for i in range(len(btc_df.Close)):
     else:
         colors.append(DECREASING_COLOR)
 
-fig['data'].append( dict( x=btc_df.index, y=df.Volume,                         
+fig['data'].append( dict( x=btc_df.index, y=btc_df.Volume,                         
                          marker=dict( color=colors ),
                          type='bar', yaxis='y', name='Volume' ) )
 
