@@ -3,7 +3,7 @@ import streamlit as st
 import numpy as np
 import plotly.graph_objects as go
 import plotly.express as px
-import plotly.plotly as py
+#import plotly.plotly as py
 from plotly.subplots import make_subplots
 import warnings
 from datetime import datetime
