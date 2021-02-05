@@ -85,8 +85,8 @@ def movingaverage(interval, window_size=10):
     window = np.ones(int(window_size))/float(window_size)
     return np.convolve(interval, window, 'same')
 
-mv_y = movingaverage(df.Close)
-mv_x = list(df.index)
+mv_y = movingaverage(btc_df.Close)
+mv_x = list(btc_df.index)
 
 # Clip the ends
 mv_x = mv_x[5:-5]
@@ -99,37 +99,19 @@ fig['data'].append( dict( x=mv_x, y=mv_y, type='scatter', mode='lines',
 
 colors = []
 
-for i in range(len(df.Close)):
+for i in range(len(btc_df.Close)):
     if i != 0:
-        if df.Close[i] > df.Close[i-1]:
+        if btc_df.Close[i] > btc_df.Close[i-1]:
             colors.append(INCREASING_COLOR)
         else:
             colors.append(DECREASING_COLOR)
     else:
         colors.append(DECREASING_COLOR)
 
-fig['data'].append( dict( x=df.index, y=df.Volume,                         
+fig['data'].append( dict( x=btc_df.index, y=df.Volume,                         
                          marker=dict( color=colors ),
                          type='bar', yaxis='y', name='Volume' ) )
-                         
-1
-2
-3
-4
-5
-6
-7
-8
-9
-10
-11
-12
-13
-14
-15
-16
-17
-18
+
 def bbands(price, window_size=10, num_of_std=5):
     rolling_mean = price.rolling(window=window_size).mean()
     rolling_std  = price.rolling(window=window_size).std()
@@ -137,7 +119,7 @@ def bbands(price, window_size=10, num_of_std=5):
     lower_band = rolling_mean - (rolling_std*num_of_std)
     return rolling_mean, upper_band, lower_band
 
-bb_avg, bb_upper, bb_lower = bbands(df.Close)
+bb_avg, bb_upper, bb_lower = bbands(btc_df.Close)
 
 fig['data'].append( dict( x=df.index, y=bb_upper, type='scatter', yaxis='y2', 
                          line = dict( width = 1 ),
