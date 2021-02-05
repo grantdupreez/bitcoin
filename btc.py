@@ -132,4 +132,4 @@ fig['data'].append( dict( x=btc_df.index, y=bb_lower, type='scatter', yaxis='y2'
                          marker=dict(color='#ccc'), hoverinfo='none',
                          legendgroup='Bollinger Bands', showlegend=False ) )
 
-py.iplot( fig, filename = 'candlestick-test-3', validate = False )
+px.iplot( fig, filename = 'candlestick-test-3', validate = False )
