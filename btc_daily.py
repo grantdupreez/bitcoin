@@ -53,6 +53,9 @@ cur = select_currency
 cur = cur[-3:]
 st.write("Market capitalisation: " + str(Money(mc.info["marketCap"], cur)))
 st.write("Bollinger band window:" + str(select_window))
+st.write("Short Moving Average:" + str(select_short))
+st.write("Long Moving Average:" + str(select_long))
+
 
 fig = go.Figure(data=[go.Candlestick(x=btc_df['Datetime'],
             open=btc_df['Open'],
