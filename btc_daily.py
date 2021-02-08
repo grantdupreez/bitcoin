@@ -32,7 +32,6 @@ btc_df = btc_df.reset_index()
 for i in ['Open', 'High', 'Close', 'Low']: 
       btc_df[i]  =  btc_df[i].astype('float64')
       
-#bollinger_window = 10
 btc_df['bollinger_mid_band'] = btc_df['Close'].rolling(window=select_window).mean()
 btc_df['bollinger_std'] = btc_df['Close'].rolling(window=select_window).std()
 btc_df['bollinger_upper_band']  = btc_df['bollinger_mid_band'] + (btc_df['bollinger_std'] * 1)
@@ -47,7 +46,7 @@ long_window = select_long
 # Construct a `Fast` and `Slow` Exponential Moving Average from short and long windows, respectively
 btc_df['fast_close'] = btc_df['Close'].ewm(halflife=select_short).mean()
 btc_df['slow_close'] = btc_df['Close'].ewm(halflife=select_long).mean()
-btc_df['ema_signal'] = np.where(btc_df['fast_close'] > btc_df['slow_close'], btc_df['Close'], None)
+btc_df['ema_signal'] = np.where(btc_df['fast_close'] == btc_df['slow_close'], btc_df['Close'], None)
 
 mc = yf.Ticker(select_currency)
 cur = select_currency
