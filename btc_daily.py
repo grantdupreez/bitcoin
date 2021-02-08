@@ -59,6 +59,10 @@ btc_df['crossover_signal'] = btc_df['crossover_long'] + btc_df['crossover_short'
 
 #SET TRADING SIGNAL 3 - EMA
 # Construct a `Fast` and `Slow` Exponential Moving Average from short and long windows, respectively
+
+# Drop NAs and calculate daily percent return
+btc_df['daily_return'] = btc_df['Close'].dropna().pct_change()
+
 btc_df['fast_vol'] = btc_df['daily_return'].ewm(halflife=select_vol_short).std()
 btc_df['slow_vol'] = btc_df['daily_return'].ewm(halflife=select_vol_long).std()
 # Construct a crossover trading signal
