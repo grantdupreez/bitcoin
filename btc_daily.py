@@ -79,10 +79,10 @@ if select_sma:
       fig.add_trace(go.Scatter(x=btc_df.Datetime, y=btc_df.slow_close,
                   mode='lines',
                   name='Long = ' + str(select_long)))
-      if btc_df['ema_signal'] is not None:
-            fig.add_trace(go.Scatter(x=btc_df.Datetime, y=btc_df['Close'],
-                  mode='markers',
-                  name='Signal'))
+#      if btc_df['ema_signal'] is not None:
+#            fig.add_trace(go.Scatter(x=btc_df.Datetime, y=btc_df['Close'],
+#                  mode='markers',
+#                  name='Signal'))
       
 
 if select_signals:
